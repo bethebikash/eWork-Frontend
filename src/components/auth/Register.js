@@ -1,7 +1,39 @@
 import React, { useState } from 'react'
-import { Row, Col, Card, Container, Form, Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 
-const Register = () => {
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    marginBottom: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
+
+const Register = ()  => {
+  const classes = useStyles();
+
   const [formData, setFormData] = useState({
     name: '',
     address: '',
@@ -31,110 +63,133 @@ const Register = () => {
   }
 
   return (
-    <Row>
-      <Col md={2}></Col>
-      <Col md={8}>
-        <Card className="my-4 py-3">
-          <Container className="justify-content-center">
-            <img src="" alt="" />
-            <h2>User Register</h2>
-            <Form onSubmit={(e) => onSubmit(e)}>
-              <Form.Group controlId="forName">
-                <Form.Label>Full Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={name}
-                  name="name"
-                  onChange={(e) => onChange(e)}
-                  placeholder="Enter Full Name"
-                />
-                <Form.Text className="text-danger">Error message here.</Form.Text>
-              </Form.Group>
-              <Form.Group controlId="forAddress">
-                <Form.Label>Address</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={address}
-                  name="address"
-                  onChange={(e) => onChange(e)}
-                  placeholder="Enter Address"
-                />
-                <Form.Text className="text-danger">Error message here.</Form.Text>
-              </Form.Group>
-              <Form.Group controlId="forPhone">
-                <Form.Label>Phone</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={phone}
-                  name="phone"
-                  onChange={(e) => onChange(e)}
-                  placeholder="Enter Phone Number"
-                />
-                <Form.Text className="text-danger">Error message here.</Form.Text>
-              </Form.Group>
-              <Form.Group controlId="forUsername">
-                <Form.Label>Username</Form.Label>
-                <Form.Control
-                  type="username"
-                  value={username}
-                  name="username"
-                  onChange={(e) => onChange(e)}
-                  placeholder="Enter Username"
-                  autoComplete="username"
-                />
-                <Form.Text className="text-danger">Error message here.</Form.Text>
-              </Form.Group>
-              <Form.Group controlId="forEmail">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  type="email"
-                  value={email}
-                  name="email"
-                  onChange={(e) => onChange(e)}
-                  placeholder="Enter Email"
-                  autoComplete="email"
-                />
-                <Form.Text className="text-danger">Error message here.</Form.Text>
-              </Form.Group>
-              <Form.Group controlId="forPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  value={password}
-                  name="password"
-                  onChange={(e) => onChange(e)}
-                  placeholder="Password"
-                  autoComplete="current-password"
-                />
-                <Form.Text className="text-danger">Error message here.</Form.Text>
-              </Form.Group>
-              <Form.Group controlId="forcPassword">
-                <Form.Label>Confirm Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  value={cPassword}
-                  name="cPassword"
-                  onChange={(e) => onChange(e)}
-                  placeholder="Confirm Password"
-                  autoComplete="current-password"
-                />
-                {error==='cPassword' && <Form.Text className="text-danger">Error message here.</Form.Text> }
-              </Form.Group>
-              <Form.Group controlId="forImage">
-                <Form.Label>Image</Form.Label>
-                <Form.Control type="file" placeholder="Choose a Photo" />
-                <Form.Text className="text-danger">Error message here.</Form.Text>
-              </Form.Group>
-              <Button block variant="primary" type="submit">
-                Submit
-              </Button>
-            </Form>
-          </Container>
-        </Card>
-      </Col>
-      <Col md={2}></Col>
-    </Row>
-  )
+    <Container component="main" maxWidth="md">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign up
+        </Typography>
+        <form className={classes.form} validate onSubmit={e=>onSubmit(e)}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <TextField
+                autoComplete="name"
+                name="name"
+                value={name}
+                onChange={e=>onChange(e)}
+                variant="outlined"
+                required
+                fullWidth
+                id="name"
+                label="Full Name"
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                autoComplete="username"
+                name="username"
+                value={username}
+                onChange={e=>onChange(e)}
+                variant="outlined"
+                required
+                fullWidth
+                id="username"
+                label="Username"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="address"
+                label="Address"
+                name="address"
+                value={address}
+                onChange={e=>onChange(e)}
+                autoComplete="address"
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="phone"
+                label="Phone Number"
+                name="phone"
+                value={phone}
+                onChange={e=>onChange(e)}
+                autoComplete="phone"
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                value={email}
+                onChange={e=>onChange(e)}
+                autoComplete="email"
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                value={password}
+                onChange={e=>onChange(e)}
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="cPassword"
+                value={cPassword}
+                onChange={e=>onChange(e)}
+                label="Confirm Password"
+                type="cPassword"
+                id="cPassword"
+                autoComplete="current-password"
+              />
+            </Grid>
+          </Grid>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            size="large"
+            className={classes.submit}
+          >
+            Sign Up
+          </Button>
+          <Grid container justify="flex-end">
+            <Grid item>
+              <Link to="/login">
+                Already have an account? Sign in
+              </Link>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+    </Container>
+  );
 }
 
 export default Register

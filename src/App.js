@@ -1,15 +1,19 @@
 import React from 'react'
-import 'normalize.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'normalize.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles/style.scss'
-import Router from './components/Router';
+import Router from './components/Router'
+import { Provider } from 'react-redux'
+import store from './store'
 
 const App = () => {
   return (
     <div>
-      <Router />
+      <Provider store={store}>
+        <Router />
+      </Provider>
     </div>
   )
 }
 
-export {App as default}
+export { App as default }

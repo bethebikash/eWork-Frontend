@@ -1,0 +1,14 @@
+.role-box{
+  cursor: pointer;
+  border: solid #F1F1F1 0.15rem;
+  border-radius: 0.3rem;
+}
+
+.role-box:hover{
+  border: solid #22cc00 0.15rem;
+  background-color: opacify($color: #b8ffaf, $amount: 0.1);
+}
+
+.role-icon{
+  max-width: 10rem;
+}

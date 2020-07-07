@@ -1,12 +1,13 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Nav from './Nav'
-import Home from './Home'
+import Home from './layout/Home'
 import { Container } from 'react-bootstrap'
 import Register from './auth/Register'
 import Login from './auth/Login'
 import { ThemeProvider } from '@material-ui/core/styles'
 import theme from './Theme'
+import Alert from './utils/Alert'
 
 const Router = () => {
   return (
@@ -14,6 +15,7 @@ const Router = () => {
       <ThemeProvider theme={theme}>
         <Nav />
         <Container>
+          <Alert />
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/register" component={Register} />

@@ -35,8 +35,8 @@ const useStyles = makeStyles((theme) => ({
 const Login = () => {
   const classes = useStyles()
 
-  const [username, changeUsername, resetUsername] = useInput('')
-  const [password, changePassword, resetPassword] = useInput('')
+  const [username, changeUsername] = useInput('')
+  const [password, changePassword] = useInput('')
 
   const onSubmit = (e) => {
     e.preventDefault()

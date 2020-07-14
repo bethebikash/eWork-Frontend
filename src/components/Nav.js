@@ -6,7 +6,7 @@ import Logo from '~/../../public/logo.png'
 const Nav = () => {
   return (
     <>
-      <Navbar collapseOnSelect expand="lg" className="navbar" variant="dark" sticky="top">
+      <Navbar collapseOnSelect expand="lg" className="navbar mb-3" variant="dark" sticky="top">
         <Container>
           <Navbar.Brand>
             <NavLink className="nav-link" to="/">

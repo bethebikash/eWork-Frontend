@@ -12,17 +12,16 @@ import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import workIcon from '~/../../public/work.svg'
 import hireIcon from '~/../../public/hire.svg'
-import { setAlert } from '../../actions/alert'
+import { register } from '../../actions/auth'
 import PropTypes from 'prop-types'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
-    marginBottom: theme.spacing(8),
+    marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(4),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    background: '#fff',
     padding: theme.spacing(4),
   },
   avatar: {
@@ -38,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Register = ({ setAlert }) => {
+const Register = ({ register }) => {
   const classes = useStyles()
 
   const [formData, setFormData] = useState({
@@ -57,24 +56,35 @@ const Register = ({ setAlert }) => {
 
   const [error, setError] = useState()
 
-  const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
+  const onChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+    setError('')
+  }
+
+  const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
   const onSubmit = (e) => {
     e.preventDefault()
-    if (password !== cPassword) {
+    if (!name) {
+      setError('nameNull')
+    } else if (!username) {
+      setError('usernameNull')
+    } else if (!address) {
+      setError('addressNull')
+    } else if (!phone) {
+      setError('phoneNull')
+    } else if (!email) {
+      setError('emailNull')
+    } else if (!emailPattern.test(email)) {
+      setError('emailInvalid')
+    } else if (!password) {
+      setError('passwordNull')
+    } else if (password.length < 6) {
+      setError('passwordLength')
+    }else if (password !== cPassword) {
       setError('cPassword')
-      setAlert('Password does not match', 'danger')
-      console.log('error pass')
     } else {
-      console.log('success')
-      // const newUser = {
-      //   name,
-      //   address,
-      //   phone,
-      //   username,
-      //   email,
-      //   password,
-      // }
+      register({name, username, address, phone, email, password, role})
     }
   }
 
@@ -132,6 +142,9 @@ const Register = ({ setAlert }) => {
                   label="Full Name"
                   autoFocus
                 />
+                {error === 'nameNull' && (
+                  <span className="text-danger font-weight-bold">name is required</span>
+                )}
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
@@ -145,6 +158,9 @@ const Register = ({ setAlert }) => {
                   id="username"
                   label="Username"
                 />
+                {error === 'usernameNull' && (
+                  <span className="text-danger font-weight-bold">username is required</span>
+                )}
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -158,6 +174,9 @@ const Register = ({ setAlert }) => {
                   onChange={(e) => onChange(e)}
                   autoComplete="address"
                 />
+                {error === 'addressNull' && (
+                  <span className="text-danger font-weight-bold">address is required</span>
+                )}
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
@@ -171,6 +190,9 @@ const Register = ({ setAlert }) => {
                   onChange={(e) => onChange(e)}
                   autoComplete="phone"
                 />
+                {error === 'phoneNull' && (
+                  <span className="text-danger font-weight-bold">phone number is required</span>
+                )}
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
@@ -184,6 +206,12 @@ const Register = ({ setAlert }) => {
                   onChange={(e) => onChange(e)}
                   autoComplete="email"
                 />
+                {error === 'emailNull' && (
+                  <span className="text-danger font-weight-bold">email is required</span>
+                )}
+                {error === 'emailInvalid' && (
+                  <span className="text-danger font-weight-bold">email is invalid</span>
+                )}
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
@@ -198,6 +226,12 @@ const Register = ({ setAlert }) => {
                   id="password"
                   autoComplete="current-password"
                 />
+                {error === 'passwordNull' && (
+                  <span className="text-danger font-weight-bold">password is required</span>
+                )}
+                {error === 'passwordLength' && (
+                  <span className="text-danger font-weight-bold">password should be min 6 character</span>
+                )}
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
@@ -208,10 +242,15 @@ const Register = ({ setAlert }) => {
                   value={cPassword}
                   onChange={(e) => onChange(e)}
                   label="Confirm Password"
-                  type="cPassword"
+                  type="password"
                   id="cPassword"
                   autoComplete="current-password"
                 />
+                {error === 'cPassword' && (
+                  <span className="text-danger font-weight-bold">
+                    password and conform password does not match
+                  </span>
+                )}
               </Grid>
             </Grid>
             <Button
@@ -237,7 +276,7 @@ const Register = ({ setAlert }) => {
 }
 
 Register.propTypes = {
-  setAlert: PropTypes.func.isRequired
+  register: PropTypes.func.isRequired,
 }
 
-export default connect(null, {setAlert})(Register)
+export default connect(null, { register })(Register)

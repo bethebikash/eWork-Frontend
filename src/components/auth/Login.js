@@ -11,6 +11,9 @@ import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import useInput from '../../hooks/useInput'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { login } from '../../actions/auth'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,15 +35,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Login = () => {
+const Login = ({login}) => {
   const classes = useStyles()
 
   const [username, changeUsername] = useInput('')
   const [password, changePassword] = useInput('')
 
+  const [error, setError] = useState('')
+
   const onSubmit = (e) => {
     e.preventDefault()
-    alert('Username: ' + username + ' Password: ' + password)
+    if (!username) {
+      setError('usernameNull')
+    } else if (!password) {
+      setError('passwordNull')
+    } else {
+      login({username, password})
+    }
   }
   return (
     <Container component="main" maxWidth="xs">
@@ -58,17 +69,19 @@ const Login = () => {
             margin="normal"
             fullWidth
             id="username"
-            label="Email Username"
+            label="Username"
             name="username"
             autoComplete="username"
             autoFocus
             value={username}
             onChange={changeUsername}
           />
+          {error === 'usernameNull' && (
+            <span className="text-danger font-weight-bold">username is required</span>
+          )}
           <TextField
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             name="password"
             label="Password"
@@ -78,6 +91,9 @@ const Login = () => {
             value={password}
             onChange={changePassword}
           />
+          {error === 'passwordNull' && (
+            <span className="text-danger font-weight-bold">password is required</span>
+          )}
           <Button
             type="submit"
             fullWidth
@@ -100,4 +116,10 @@ const Login = () => {
   )
 }
 
-export default Login
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+}
+
+export default connect(null, {login}) (Login)
+
+

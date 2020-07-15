@@ -37,9 +37,10 @@ export const register = ({ name, username, address, phone, email, password, role
       type: REGISTER_SUCCESS,
       payload: res.data
     })
+    dispatch(setAlert('Your account has been created successfully', 'success'))
   } catch (error) {
     const err = error.response.data.error.message
-    dispatch(setAlert(err, 'danger'))
+    dispatch(setAlert(err, 'error'))
     dispatch({
       type: REGISTER_FAIL
     })
@@ -67,9 +68,10 @@ export const login = ({ username, password }) => async (dispatch) => {
       payload: res.data
     })
     dispatch(loadUser())
+    dispatch(setAlert('Login Successfull', 'success'))
   } catch (error) {
     const err = error.response.data.error.message
-    dispatch(setAlert(err, 'danger'))
+    dispatch(setAlert(err, 'error'))
     dispatch({
       type: LOGIN_FAIL
     })

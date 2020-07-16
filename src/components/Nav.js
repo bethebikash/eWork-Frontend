@@ -2,8 +2,11 @@ import React from 'react'
 import { Navbar, Nav as BootNav, Container } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
 import Logo from '~/../../public/logo.png'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { logout } from '../actions/auth'
 
-const Nav = () => {
+const Nav = ({ auth: { isAuthenticated, loading }, logout }) => {
   return (
     <>
       <Navbar collapseOnSelect expand="lg" className="navbar mb-3" variant="dark" sticky="top">
@@ -16,10 +19,34 @@ const Nav = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <BootNav className="m-auto">
-              <NavLink className="nav-link m-auto" to="/register">Register</NavLink>
+              {!loading && (
+                <>
+                  {isAuthenticated ? (
+                    <NavLink className="nav-link m-auto" to="/register">
+                      auth
+                    </NavLink>
+                  ) : (
+                    <NavLink className="nav-link m-auto" to="/register">
+                      not auth
+                    </NavLink>
+                  )}
+                </>
+              )}
             </BootNav>
             <BootNav>
-              <NavLink className="nav-link m-auto" to="/login">Login</NavLink>
+              {!loading && (
+                <>
+                  {isAuthenticated ? (
+                    <a className="nav-link m-auto btn-link" href="#!" onClick={logout}>
+                      Logout
+                    </a>
+                  ) : (
+                    <NavLink className="nav-link m-auto" to="/login">
+                      Login
+                    </NavLink>
+                  )}
+                </>
+              )}
             </BootNav>
           </Navbar.Collapse>
         </Container>
@@ -28,4 +55,13 @@ const Nav = () => {
   )
 }
 
-export default Nav
+Nav.prototype = {
+  logout: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+}
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+})
+
+export default connect(mapStateToProps, { logout })(Nav)

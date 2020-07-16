@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Login = ({login}) => {
+const Login = ({ login, isAuthenticated }) => {
   const classes = useStyles()
 
   const [username, changeUsername] = useInput('')
@@ -50,9 +50,15 @@ const Login = ({login}) => {
     } else if (!password) {
       setError('passwordNull')
     } else {
-      login({username, password})
+      login({ username, password })
     }
   }
+
+  // Redirect
+  if (isAuthenticated) {
+    return <Redirect to="/" />
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -118,8 +124,11 @@ const Login = ({login}) => {
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
 }
 
-export default connect(null, {login}) (Login)
+const mapStateProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+})
 
-
+export default connect(mapStateProps, { login })(Login)

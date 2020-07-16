@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Register = ({ register }) => {
+const Register = ({ register, isAuthenticated }) => {
   const classes = useStyles()
 
   const [formData, setFormData] = useState({
@@ -86,6 +86,10 @@ const Register = ({ register }) => {
     } else {
       register({name, username, address, phone, email, password, role})
     }
+  }
+
+  if(isAuthenticated){
+    return <Redirect to="/" />
   }
 
   return (
@@ -277,6 +281,11 @@ const Register = ({ register }) => {
 
 Register.propTypes = {
   register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
 }
 
-export default connect(null, { register })(Register)
+const mapStateProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+})
+
+export default connect(mapStateProps, { register })(Register)

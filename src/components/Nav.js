@@ -22,8 +22,8 @@ const Nav = ({ auth: { isAuthenticated, loading }, logout }) => {
               {!loading && (
                 <>
                   {isAuthenticated ? (
-                    <NavLink className="nav-link m-auto" to="/register">
-                      auth
+                    <NavLink className="nav-link m-auto" to="/profile">
+                      profile
                     </NavLink>
                   ) : (
                     <NavLink className="nav-link m-auto" to="/register">

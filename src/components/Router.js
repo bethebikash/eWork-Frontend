@@ -8,6 +8,8 @@ import Login from './auth/Login'
 import { ThemeProvider } from '@material-ui/core/styles'
 import theme from './Theme'
 import Alert from './utils/Alert'
+import Profile from './auth/Profile'
+import PrivateRoute from './PrivateRoute'
 
 const Router = () => {
   return (
@@ -20,6 +22,7 @@ const Router = () => {
             <Route exact path="/" component={Home} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
+            <PrivateRoute exact path="/profile" component={Profile} />
           </Switch>
         </Container>
       </ThemeProvider>

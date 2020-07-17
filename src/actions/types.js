@@ -13,6 +13,9 @@ export const ADMIN_LOGIN_FAIL = 'ADMIN_LOGIN_FAIL'
 export const LOAD_USER = 'LOAD_USER'
 export const AUTH_ERROR = 'AUTH_ERROR'
 
+export const GET_WORKPROFILE = 'GET_WORKPROFILE'
+export const WORKPROFILE_ERROR = 'WORKPROFILE_ERROR'
+
 export const LOGOUT = 'LOGOUT'
 export const ADMIN_LOGOUT = 'ADMIN_LOGOUT'
 

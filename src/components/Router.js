@@ -8,7 +8,7 @@ import Login from './auth/Login'
 import { ThemeProvider } from '@material-ui/core/styles'
 import theme from './Theme'
 import Alert from './utils/Alert'
-import Profile from './auth/Profile'
+import Profile from './layout/Profile'
 import PrivateRoute from './PrivateRoute'
 
 const Router = () => {

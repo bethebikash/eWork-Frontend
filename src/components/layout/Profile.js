@@ -19,16 +19,16 @@ const Profile = ({ auth: { loading, user } }) => {
             <Card className="bg-light shadow">
               <Card.Header className="bg-white border-0">
                 <Row>
-                  <Col sm={6}>
+                  <Col md={6}>
                     <h3 className="mb-0">Personal Details</h3>
                   </Col>
-                  <Col sm={3}>
-                    <Link to="/me/edit" className="btn btn-sm btn-primary">
+                  <Col md={3}>
+                    <Link to="/me/edit" className="btn btn-sm btn-primary my-1">
                       Edit Profile
                     </Link>
                   </Col>
-                  <Col sm={3}>
-                    <Link to="/me/change-password" className="btn btn-sm btn-warning">
+                  <Col md={3}>
+                    <Link to="/me/change-password" className="btn btn-sm btn-warning my-1">
                       Change Password
                     </Link>
                   </Col>
@@ -96,7 +96,7 @@ const Profile = ({ auth: { loading, user } }) => {
       <div>
         <WorkProfile />
       </div>
-      </>
+    </>
   )
 }
 

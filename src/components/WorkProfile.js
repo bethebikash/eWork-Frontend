@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { getWorkProfile } from '../actions/workProfile'
 import Spinner from './utils/Spinner'
 import { Row, Col, Card } from 'react-bootstrap'
-import { Button } from '@material-ui/core'
+import { Button, Link } from '@material-ui/core'
 
 const WorkProfile = ({ getWorkProfile, user, workProfile: { workProfile, loading } }) => {
   useEffect(() => {
@@ -14,7 +14,6 @@ const WorkProfile = ({ getWorkProfile, user, workProfile: { workProfile, loading
   return loading && workProfile === null ? (
     <>
       <Spinner />
-      {user._id}
     </>
   ) : (
     <Row className="py-3">
@@ -23,15 +22,40 @@ const WorkProfile = ({ getWorkProfile, user, workProfile: { workProfile, loading
         <Card className="bg-light shadow">
           <Card.Header className="bg-white border-0">
             <Row>
-              <Col sm={6}>
+              <Col md={9}>
                 <h3 className="mb-0">Work Profile</h3>
+              </Col>
+              <Col md={3}>
+                {workProfile !== null && (
+                  <Link to="#" className="btn btn-sm btn-info my-1">
+                    Update Work Profile
+                  </Link>
+                )}
               </Col>
             </Row>
           </Card.Header>
           <Card.Body className="p-4">
             {workProfile !== null ? (
               <Row>
-                <Col md={12}>has work profile</Col>
+                <Col md={12}>
+                  <h4>Skills</h4>
+                  <div>
+                    {workProfile.skills.map((skill) => (
+                      <span className="pills" key={skill._id}>
+                        {skill.skill}
+                      </span>
+                    ))}
+                  </div>
+                  <hr />
+                  <h4>Technologies</h4>
+                  <div>
+                    {workProfile.technologies.map((technology) => (
+                      <span className="pills" key={technology._id}>
+                        {technology.technology}
+                      </span>
+                    ))}
+                  </div>
+                </Col>
               </Row>
             ) : (
               <Row>

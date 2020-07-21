@@ -2,8 +2,6 @@ import { GET_WORKPROFILE, WORKPROFILE_ERROR } from "../actions/types";
 
 const initialState = {
   workProfile: null,
-  skills: [],
-  technologies: [],
   loading: true,
   error: {}
 }

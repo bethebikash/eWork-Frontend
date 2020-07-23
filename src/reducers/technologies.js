@@ -1,7 +1,7 @@
-import { GET_WORKPROFILE, WORKPROFILE_ERROR, ADD_WORKPROFILE } from "../actions/types";
+import { GET_TECHNOLOGIES, TECHNOLOGIES_ERROR } from "../actions/types";
 
 const initialState = {
-  workProfile: null,
+  technologies: null,
   loading: true
 }
 
@@ -9,15 +9,14 @@ export default function(state= initialState, action){
   const {type, payload}= action;
 
   switch (type) {
-    case GET_WORKPROFILE:
+    case GET_TECHNOLOGIES:
       return {
         ...state,
-        workProfile: payload,
+        technologies: payload,
         loading: false
       }
     
-    case ADD_WORKPROFILE:
-    case WORKPROFILE_ERROR:
+    case TECHNOLOGIES_ERROR:
       return {
         ...state,
         loading: false

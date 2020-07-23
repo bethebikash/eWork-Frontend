@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import defaultPic from '~/../../public/default_profile.png'
 import Spinner from '../utils/Spinner'
 import WorkProfile from '../WorkProfile'
+import AddWorkProfile from '../AddWorkProfile'
 
 const Profile = ({ auth: { loading, user } }) => {
   return loading && user === null ? (
@@ -95,6 +96,7 @@ const Profile = ({ auth: { loading, user } }) => {
       </section>
       <div>
         <WorkProfile />
+        <AddWorkProfile />
       </div>
     </>
   )

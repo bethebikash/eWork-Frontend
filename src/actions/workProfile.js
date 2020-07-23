@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { GET_WORKPROFILE, WORKPROFILE_ERROR } from './types'
+import { GET_WORKPROFILE, WORKPROFILE_ERROR, ADD_WORKPROFILE } from './types'
+import { setAlert } from './alert'
 
 // get work profile of current user
 export const getWorkProfile = (id) => async (dispatch) => {
@@ -10,9 +11,36 @@ export const getWorkProfile = (id) => async (dispatch) => {
       payload: res.data
     })
   } catch (error) {
+    const err = error.response.data.error.message
+    dispatch(setAlert(err, 'error'))
     dispatch({
       type: WORKPROFILE_ERROR,
-      payload: { msg: error.response.data.error.message}
+    })
+  }
+}
+
+// Add WorkProfile
+export const addWorkProfile = ({ skills, technologies }) => async (dispatch) => {
+  const config = {
+    header: {
+      'Content-Type': 'application/json'
+    }
+  }
+
+  const body = ({skills, technologies })
+
+  try {
+    await axios.post('/work-propiles/', body, config)
+    dispatch({
+      type: ADD_WORKPROFILE,
+    })
+    dispatch(getWorkProfile())
+    dispatch(setAlert('WorkProfile has been added successfully', 'success'))
+  } catch (error) {
+    const err = error.response.data.error.message
+    dispatch(setAlert(err, 'error'))
+    dispatch({
+      type: WORKPROFILE_ERROR
     })
   }
 }

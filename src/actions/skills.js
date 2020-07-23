@@ -5,7 +5,7 @@ import { setAlert } from './alert'
 // get skills
 export const getSkills = () => async (dispatch) => {
   try {
-    const res = await axios.get(`/skills/`)
+    const res = await axios.get(`/skills`)
     dispatch({
       type: GET_SKILLS,
       payload: res.data

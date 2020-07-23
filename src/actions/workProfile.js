@@ -20,14 +20,14 @@ export const getWorkProfile = (id) => async (dispatch) => {
 }
 
 // Add WorkProfile
-export const addWorkProfile = ({ skills, technologies }) => async (dispatch) => {
+export const addWorkProfile = ({ skills, technologies, rate,  belongs_to}) => async (dispatch) => {
   const config = {
     header: {
       'Content-Type': 'application/json'
     }
   }
 
-  const body = ({skills, technologies })
+  const body = ({skills, technologies, rate, belongs_to })
 
   try {
     await axios.post('/work-propiles/', body, config)

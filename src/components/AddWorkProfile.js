@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react'
-import { Link, Redirect } from 'react-router-dom'
+// import { Link, Redirect } from 'react-router-dom'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import Box from '@material-ui/core/Box'
 import Work from '@material-ui/icons/Work'
 import Typography from '@material-ui/core/Typography'
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Input from '@material-ui/core/Input';
+import { makeStyles, useTheme } from '@material-ui/core/styles'
+import Input from '@material-ui/core/Input'
 import Container from '@material-ui/core/Container'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { FormControl, Select, MenuItem, InputLabel, Chip } from '@material-ui/core'
+import { FormControl, Select, MenuItem, InputLabel, Chip, Grid, TextField } from '@material-ui/core'
 import { getSkills } from '../actions/skills'
 import { getTechnologies } from '../actions/technologies'
 import Spinner from './utils/Spinner'
+import { addWorkProfile } from '../actions/workProfile'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -62,10 +62,10 @@ const MenuProps = {
   },
 }
 
-function getStyles(skills, skill, theme) {
+function getStyles(items, item, theme) {
   return {
     fontWeight:
-      skill.indexOf(skills) === -1
+      item.indexOf(items) === -1
         ? theme.typography.fontWeightRegular
         : theme.typography.fontWeightMedium,
   }
@@ -74,11 +74,12 @@ function getStyles(skills, skill, theme) {
 const AddWorkProfile = ({
   addWorkProfile,
   skillArray,
-  technologyArray,
+  techArray,
   loadSkill,
   loadTechnologies,
   getSkills,
-  getTechnologies
+  getTechnologies,
+  userId
 }) => {
   const classes = useStyles()
   const theme = useTheme()
@@ -90,30 +91,52 @@ const AddWorkProfile = ({
 
   const [skills, setSkills] = useState([])
   const [technologies, setTechnologies] = useState([])
+  const [rate, setRate] = useState('')
 
   const [error, setError] = useState()
 
   const handleChangeSkill = (event) => {
-    setSkills(event.target.value);
-  };
+    setSkills(event.target.value)
+    setError('')
+  }
+
+  const handleChangeTechnology = (event) => {
+    setTechnologies(event.target.value)
+    setError('')
+  }
+
+  const handleChangeRate = (event) => {
+    setRate(event.target.value)
+    setError('')
+  }
 
   const onSubmit = (e) => {
     e.preventDefault()
-    if (!skills) {
+    if (skills.length === 0) {
       setError('skillNull')
-    } else if (!technologies) {
+    } else if (skills.length < 3) {
+      setError('minSkill')
+    } else if (technologies.length === 0) {
       setError('techNull')
+    } else if (technologies.length < 3) {
+      setError('minTech')
+    } else if (!rate) {
+      setError('rateNull')
+    } else if (isNaN(rate)) {
+      setError('rateNum')
     } else {
-      addWorkProfile({ skills, technologies })
+      const newSkills = skills.map((sk) => sk._id)
+      const newTech = technologies.map((tech) => tech._id)
+      console.log(newSkills)
+      console.log(newTech)
+      addWorkProfile({ newSkills, newTech, rate, userId })
     }
   }
 
   return (
     <Container component="main" maxWidth="md">
       <CssBaseline />
-      {loadSkill && loadTechnologies ? (
-        <Spinner />
-      ) : (
+      {!loadSkill && !loadTechnologies ? (
         <>
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
@@ -122,27 +145,31 @@ const AddWorkProfile = ({
             <Typography component="h1" variant="h5">
               Add Work Profile
             </Typography>
-            <form className={classes.form} validate onSubmit={onSubmit}>
+            <form className={classes.form} noValidate onSubmit={onSubmit}>
               <FormControl fullWidth className={classes.formControl}>
-                <InputLabel id="demo-mutiple-chip-label">Skills</InputLabel>
+                <InputLabel id="skill-mutiple-chip-label">Skills</InputLabel>
                 <Select
-                  labelId="demo-mutiple-chip-label"
-                  id="demo-mutiple-chip"
-                  multiple 
-                  value={skillArray.map((skillArr) => {return (skillArr._id)})}
+                  labelId="skill-mutiple-chip-label"
+                  id="skill-mutiple-chip"
+                  multiple
+                  value={skills}
                   onChange={handleChangeSkill}
-                  input={<Input id="select-multiple-chip" />}
+                  input={<Input id="skill-select-multiple-chip" />}
                   renderValue={(selected) => (
                     <div className={classes.chips}>
                       {selected.map((value) => (
-                        <Chip key={value} label={value} className={classes.chip} />
+                        <Chip key={value._id} label={value.skill} />
                       ))}
                     </div>
                   )}
                   MenuProps={MenuProps}
                 >
                   {skillArray.map((skillArr) => (
-                    <MenuItem key={skillArr._id} value={skillArr._id} style={getStyles(skillArr, skillArr.skill, theme)}>
+                    <MenuItem
+                      key={skillArr._id}
+                      value={skillArr}
+                      style={getStyles(skillArr, skillArr.skill, theme)}
+                    >
                       {skillArr.skill}
                     </MenuItem>
                   ))}
@@ -151,6 +178,68 @@ const AddWorkProfile = ({
               {error === 'skillNull' && (
                 <span className="text-danger font-weight-bold">skills are required</span>
               )}
+              {error === 'minSkill' && (
+                <span className="text-danger font-weight-bold">minimum 3 skills are required</span>
+              )}
+
+              <FormControl fullWidth className={classes.formControl}>
+                <InputLabel id="tech-mutiple-chip-label">Technologies</InputLabel>
+                <Select
+                  labelId="tech-mutiple-chip-label"
+                  id="tech-mutiple-chip"
+                  multiple
+                  value={technologies}
+                  onChange={handleChangeTechnology}
+                  input={<Input id="tech-select-multiple-chip" />}
+                  renderValue={(selected) => (
+                    <div className={classes.chips}>
+                      {selected.map((value) => (
+                        <Chip key={value._id} label={value.technology} />
+                      ))}
+                    </div>
+                  )}
+                  MenuProps={MenuProps}
+                >
+                  {techArray.map((techArr) => (
+                    <MenuItem
+                      key={techArr._id}
+                      value={techArr}
+                      style={getStyles(techArr, techArr.technology, theme)}
+                    >
+                      {techArr.technology}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              {error === 'techNull' && (
+                <span className="text-danger font-weight-bold">technologies are required</span>
+              )}
+              {error === 'minTech' && (
+                <span className="text-danger font-weight-bold">
+                  minimum 3 technologies are required
+                </span>
+              )}
+
+              <Grid item xs={12} md={12}>
+                <TextField
+                className="mt-3"
+                  autoComplete="rate"
+                  name="rat"e
+                  value={rate}
+                  onChange={handleChangeRate}
+                  variant="outlined"
+                  fullWidth
+                  id="rate"
+                  size="small"
+                  label="Rate (per hour in Rs)"
+                />
+                {error === 'rateNull' && (
+                  <span className="text-danger font-weight-bold">rate is required</span>
+                )}
+                {error === 'rateNum' && (
+                  <span className="text-danger font-weight-bold">provide a rate in number</span>
+                )}
+              </Grid>
 
               <Button
                 type="submit"
@@ -165,6 +254,8 @@ const AddWorkProfile = ({
             </form>
           </div>
         </>
+      ) : (
+        <Spinner />
       )}
     </Container>
   )
@@ -174,17 +265,21 @@ AddWorkProfile.propTypes = {
   getSkills: PropTypes.func.isRequired,
   getTechnologies: PropTypes.func.isRequired,
   addWorkProfile: PropTypes.func.isRequired,
-  skillArray: PropTypes.array.isRequired,
-  technologyArray: PropTypes.array.isRequired,
+  skillArray: PropTypes.array,
+  technArray: PropTypes.array,
   loadSkill: PropTypes.bool.isRequired,
   loadTechnologies: PropTypes.bool.isRequired,
+  userId: PropTypes.string.isRequired,
 }
 
 const mapStateProps = (state) => ({
   skillArray: state.skills.skills,
-  technologyArray: state.technologies.technologies,
+  techArray: state.technologies.technologies,
   loadSkill: state.skills.loading,
   loadTechnologies: state.technologies.loading,
+  userId: state.auth.user._id
 })
 
-export default connect(mapStateProps, { getSkills, getTechnologies })(AddWorkProfile)
+export default connect(mapStateProps, { getSkills, getTechnologies, addWorkProfile })(
+  AddWorkProfile
+)

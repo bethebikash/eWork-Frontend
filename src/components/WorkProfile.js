@@ -9,7 +9,7 @@ import { Button, Link } from '@material-ui/core'
 const WorkProfile = ({ getWorkProfile, user, workProfile: { workProfile, loading } }) => {
   useEffect(() => {
     getWorkProfile(user._id)
-  }, [])
+  }, [user._id])
 
   return loading && workProfile === null ? (
     <>

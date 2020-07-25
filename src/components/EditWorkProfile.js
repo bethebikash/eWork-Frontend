@@ -14,7 +14,8 @@ import { getSkills } from '../actions/skills'
 import { getTechnologies } from '../actions/technologies'
 import Spinner from './utils/Spinner'
 import { editWorkProfile } from '../actions/workProfile'
-import { Card } from 'react-bootstrap'
+import { Card, Row, Col } from 'react-bootstrap'
+import { setToggleWP, setToggleEWP } from '../actions/toggle'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -83,7 +84,9 @@ const EditWorkProfile = ({
   userSkills,
   userTechnologies,
   userRate,
-  editWorkProfile
+  editWorkProfile,
+  setToggleEWP,
+  setToggleWP,
 }) => {
   const classes = useStyles()
   const theme = useTheme()
@@ -138,142 +141,162 @@ const EditWorkProfile = ({
   }
 
   return (
-    <Card className="bg-light shadow my-3">
-      <Card.Header className="bg-white border-0">
-        <h3>Update Work Profile</h3>
-      </Card.Header>
-      <Card.Body>
-        <Container component="main" maxWidth="md">
-          <CssBaseline />
-          {!loadSkill && !loadTechnologies ? (
-            <>
-              <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                  <Work />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                  Update Work Profile
-                </Typography>
-                <form className={classes.form} noValidate onSubmit={onEditSubmit}>
-                  <FormControl fullWidth className={classes.formControl}>
-                    <InputLabel id="skill-mutiple-chip-label">Skills</InputLabel>
-                    <Select
-                      labelId="skill-mutiple-chip-label"
-                      id="skill-mutiple-chip"
-                      multiple
-                      defaultValue={userSkills}
-                      value={skills}
-                      onChange={handleChangeSkill}
-                      input={<Input id="skill-select-multiple-chip" />}
-                      renderValue={(selected) => (
-                        <div className={classes.chips}>
-                          {selected.map((value) => (
-                            <Chip key={value._id} label={value.skill} />
-                          ))}
-                        </div>
-                      )}
-                      MenuProps={MenuProps}
-                    >
-                      {skillArray.map((skillArr) => (
-                        <MenuItem
-                          selected
-                          key={skillArr._id}
-                          value={skillArr}
-                          style={getStyles(skillArr, skillArr.skill, theme)}
-                        >
-                          {skillArr.skill}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                  {error === 'skillNull' && (
-                    <span className="text-danger font-weight-bold">skills are required</span>
-                  )}
-                  {error === 'minSkill' && (
-                    <span className="text-danger font-weight-bold">
-                      minimum 3 skills are required
-                    </span>
-                  )}
-
-                  <FormControl fullWidth className={classes.formControl}>
-                    <InputLabel id="tech-mutiple-chip-label">Technologies</InputLabel>
-                    <Select
-                      labelId="tech-mutiple-chip-label"
-                      id="tech-mutiple-chip"
-                      multiple
-                      value={technologies}
-                      onChange={handleChangeTechnology}
-                      input={<Input id="tech-select-multiple-chip" />}
-                      renderValue={(selected) => (
-                        <div className={classes.chips}>
-                          {selected.map((value) => (
-                            <Chip key={value._id} label={value.technology} />
-                          ))}
-                        </div>
-                      )}
-                      MenuProps={MenuProps}
-                    >
-                      {techArray.map((techArr) => (
-                        <MenuItem
-                          key={techArr._id}
-                          value={techArr}
-                          style={getStyles(techArr, techArr.technology, theme)}
-                        >
-                          {techArr.technology}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                  {error === 'techNull' && (
-                    <span className="text-danger font-weight-bold">technologies are required</span>
-                  )}
-                  {error === 'minTech' && (
-                    <span className="text-danger font-weight-bold">
-                      minimum 3 technologies are required
-                    </span>
-                  )}
-
-                  <Grid item xs={12} md={12}>
-                    <TextField
-                      className="mt-3"
-                      autoComplete="rate"
-                      name="rat"
-                      e
-                      value={rate}
-                      onChange={handleChangeRate}
-                      variant="outlined"
-                      fullWidth
-                      id="rate"
-                      size="small"
-                      label="Rate (per hour in Rs)"
-                    />
-                    {error === 'rateNull' && (
-                      <span className="text-danger font-weight-bold">rate is required</span>
-                    )}
-                    {error === 'rateNum' && (
-                      <span className="text-danger font-weight-bold">provide a rate in number</span>
-                    )}
-                  </Grid>
-
-                  <Button
-                    type="submit"
-                    fullWidth
-                    size="medium"
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
+    <Row className="py-3">
+        <Col>
+          <Card className="bg-light shadow">
+            <Card.Header className="bg-white border-0">
+              <Row>
+                <Col md={9}>
+                  <h3 className="mb-0">Update Work Profile</h3>
+                </Col>
+                <Col md={3}>
+                  <button
+                    onClick={() => (setToggleWP(true), setToggleEWP(false))}
+                    className="btn btn-sm btn-info my-1"
                   >
-                    Submit
-                  </Button>
-                </form>
-              </div>
-            </>
-          ) : (
-            <Spinner />
-          )}
-        </Container>
-      </Card.Body>
-    </Card>
+                    ← Back
+                  </button>
+                </Col>
+              </Row>
+            </Card.Header>
+            <Card.Body>
+              <Container component="main" maxWidth="md">
+                <CssBaseline />
+                {!loadSkill && !loadTechnologies ? (
+                  <>
+                    <div className={classes.paper}>
+                      <Avatar className={classes.avatar}>
+                        <Work />
+                      </Avatar>
+                      <Typography component="h1" variant="h5">
+                        Update Work Profile
+                      </Typography>
+                      <form className={classes.form} noValidate onSubmit={onEditSubmit}>
+                        <FormControl fullWidth className={classes.formControl}>
+                          <InputLabel id="skill-mutiple-chip-label">Skills</InputLabel>
+                          <Select
+                            labelId="skill-mutiple-chip-label"
+                            id="skill-mutiple-chip"
+                            multiple
+                            defaultValue={userSkills}
+                            value={skills}
+                            onChange={handleChangeSkill}
+                            input={<Input id="skill-select-multiple-chip" />}
+                            renderValue={(selected) => (
+                              <div className={classes.chips}>
+                                {selected.map((value) => (
+                                  <Chip key={value._id} label={value.skill} />
+                                ))}
+                              </div>
+                            )}
+                            MenuProps={MenuProps}
+                          >
+                            {skillArray.map((skillArr) => (
+                              <MenuItem
+                                selected
+                                key={skillArr._id}
+                                value={skillArr}
+                                style={getStyles(skillArr, skillArr.skill, theme)}
+                              >
+                                {skillArr.skill}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                        {error === 'skillNull' && (
+                          <span className="text-danger font-weight-bold">skills are required</span>
+                        )}
+                        {error === 'minSkill' && (
+                          <span className="text-danger font-weight-bold">
+                            minimum 3 skills are required
+                          </span>
+                        )}
+
+                        <FormControl fullWidth className={classes.formControl}>
+                          <InputLabel id="tech-mutiple-chip-label">Technologies</InputLabel>
+                          <Select
+                            labelId="tech-mutiple-chip-label"
+                            id="tech-mutiple-chip"
+                            multiple
+                            value={technologies}
+                            onChange={handleChangeTechnology}
+                            input={<Input id="tech-select-multiple-chip" />}
+                            renderValue={(selected) => (
+                              <div className={classes.chips}>
+                                {selected.map((value) => (
+                                  <Chip key={value._id} label={value.technology} />
+                                ))}
+                              </div>
+                            )}
+                            MenuProps={MenuProps}
+                          >
+                            {techArray.map((techArr) => (
+                              <MenuItem
+                                key={techArr._id}
+                                value={techArr}
+                                style={getStyles(techArr, techArr.technology, theme)}
+                              >
+                                {techArr.technology}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                        {error === 'techNull' && (
+                          <span className="text-danger font-weight-bold">
+                            technologies are required
+                          </span>
+                        )}
+                        {error === 'minTech' && (
+                          <span className="text-danger font-weight-bold">
+                            minimum 3 technologies are required
+                          </span>
+                        )}
+
+                        <Grid item xs={12} md={12}>
+                          <TextField
+                            className="mt-3"
+                            autoComplete="rate"
+                            name="rat"
+                            e
+                            value={rate}
+                            onChange={handleChangeRate}
+                            variant="outlined"
+                            fullWidth
+                            id="rate"
+                            size="small"
+                            label="Rate (per hour in Rs)"
+                          />
+                          {error === 'rateNull' && (
+                            <span className="text-danger font-weight-bold">rate is required</span>
+                          )}
+                          {error === 'rateNum' && (
+                            <span className="text-danger font-weight-bold">
+                              provide a rate in number
+                            </span>
+                          )}
+                        </Grid>
+
+                        <Button
+                          type="submit"
+                          fullWidth
+                          size="medium"
+                          variant="contained"
+                          color="primary"
+                          className={classes.submit}
+                        >
+                          Submit
+                        </Button>
+                      </form>
+                    </div>
+                  </>
+                ) : (
+                  <Spinner />
+                )}
+              </Container>
+            </Card.Body>
+          </Card>
+        </Col>
+    </Row>
   )
 }
 
@@ -290,6 +313,8 @@ EditWorkProfile.propTypes = {
   userRate: PropTypes.number.isRequired,
   userId: PropTypes.string.isRequired,
   wpId: PropTypes.string.isRequired,
+  setToggleEWP: PropTypes.func.isRequired,
+  setToggleWP: PropTypes.func.isRequired,
 }
 
 const mapStateProps = (state) => ({
@@ -301,9 +326,13 @@ const mapStateProps = (state) => ({
   userSkills: state.workProfile.workProfile.skills,
   userTechnologies: state.workProfile.workProfile.technologies,
   userRate: state.workProfile.workProfile.rate,
-  wpId: state.workProfile.workProfile._id
+  wpId: state.workProfile.workProfile._id,
 })
 
-export default connect(mapStateProps, { getSkills, getTechnologies, editWorkProfile })(
-  EditWorkProfile
-)
+export default connect(mapStateProps, {
+  getSkills,
+  getTechnologies,
+  editWorkProfile,
+  setToggleEWP,
+  setToggleWP,
+})(EditWorkProfile)

@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { logout } from '../actions/auth'
 
-const Nav = ({ auth: { isAuthenticated, loading }, logout }) => {
+const Nav = ({ auth: { isAuthenticated, loading, user }, logout }) => {
   return (
     <>
       <Navbar collapseOnSelect expand="lg" className="navbar mb-3" variant="dark" sticky="top">
@@ -21,10 +21,26 @@ const Nav = ({ auth: { isAuthenticated, loading }, logout }) => {
             <BootNav className="m-auto">
               {!loading && (
                 <>
-                  {isAuthenticated ? (
-                    <NavLink className="nav-link m-auto" to="/profile">
-                      profile
-                    </NavLink>
+                  {isAuthenticated && user ? (
+                    <>
+                      {user.role === 'work' && (
+                        <>
+                          <NavLink className="nav-link m-auto" to="/profile">
+                            My Task
+                          </NavLink>
+                        </>
+                      )}
+                      {user.role === 'hire' && (
+                        <>
+                          <NavLink className="nav-link m-auto" to="/profile">
+                            Post Jobs
+                          </NavLink>
+                        </>
+                      )}
+                      <NavLink className="nav-link m-auto" to="/profile">
+                        Profile
+                      </NavLink>
+                    </>
                   ) : (
                     <NavLink className="nav-link m-auto" to="/register">
                       not auth

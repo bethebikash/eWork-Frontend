@@ -1,4 +1,4 @@
-import { GET_WORKPROFILE, WORKPROFILE_ERROR, ADD_WORKPROFILE } from "../actions/types";
+import { GET_WORKPROFILE, WORKPROFILE_ERROR, ADD_WORKPROFILE, EDIT_WORKPROFILE } from "../actions/types";
 
 const initialState = {
   workProfile: null,
@@ -17,6 +17,7 @@ export default function(state= initialState, action){
       }
     
     case ADD_WORKPROFILE:
+    case EDIT_WORKPROFILE:
     case WORKPROFILE_ERROR:
       return {
         ...state,

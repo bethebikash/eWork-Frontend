@@ -3,10 +3,17 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { getWorkProfile } from '../actions/workProfile'
 import Spinner from './utils/Spinner'
-import { Row, Col, Card } from 'react-bootstrap'
-import { Button, Link } from '@material-ui/core'
+import { Row, Col, Card, Button } from 'react-bootstrap'
+import { setToggleWP, setToggleAWP, setToggleEWP } from '../actions/toggle'
 
-const WorkProfile = ({ getWorkProfile, user, workProfile: { workProfile, loading } }) => {
+const WorkProfile = ({
+  getWorkProfile,
+  user,
+  workProfile: { workProfile, loading },
+  setToggleWP,
+  setToggleAWP,
+  setToggleEWP,
+}) => {
   useEffect(() => {
     getWorkProfile(user._id)
   }, [user._id])
@@ -27,9 +34,12 @@ const WorkProfile = ({ getWorkProfile, user, workProfile: { workProfile, loading
               </Col>
               <Col md={3}>
                 {workProfile !== null && (
-                  <Link to="#" className="btn btn-sm btn-info my-1">
+                  <Button
+                    onClick={() => (setToggleWP(false), setToggleEWP(true))}
+                    className="btn btn-sm btn-info my-1"
+                  >
                     Update Work Profile
-                  </Link>
+                  </Button>
                 )}
               </Col>
             </Row>
@@ -55,13 +65,24 @@ const WorkProfile = ({ getWorkProfile, user, workProfile: { workProfile, loading
                       </span>
                     ))}
                   </div>
+                  <hr />
+                  <h4>Rate: per hour (in Rs)</h4>
+                  <div>
+                    <h3 class="text-secondary font-weight-bold">{workProfile.rate}</h3>
+                  </div>
                 </Col>
               </Row>
             ) : (
               <Row>
                 <Col md={6}>You have not created a work profile</Col>
                 <Col md={6}>
-                  <Button variant="contained" size="small" color="primary" className="pull-right">
+                  <Button
+                    onClick={() => (setToggleWP(false), setToggleAWP(true))}
+                    variant="contained"
+                    size="small"
+                    color="primary"
+                    className="pull-right"
+                  >
                     Add Work Profile
                   </Button>
                 </Col>
@@ -78,6 +99,8 @@ WorkProfile.prototype = {
   getWorkProfile: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   workProfile: PropTypes.object.isRequired,
+  setToggleWP: PropTypes.func.isRequired,
+  setToggleAWP: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
@@ -85,4 +108,9 @@ const mapStateToProps = (state) => ({
   workProfile: state.workProfile,
 })
 
-export default connect(mapStateToProps, { getWorkProfile })(WorkProfile)
+export default connect(mapStateToProps, {
+  getWorkProfile,
+  setToggleWP,
+  setToggleAWP,
+  setToggleEWP,
+})(WorkProfile)

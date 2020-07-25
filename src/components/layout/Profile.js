@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Row, Col, Card } from 'react-bootstrap'
 import { connect } from 'react-redux'
@@ -7,8 +7,21 @@ import defaultPic from '~/../../public/default_profile.png'
 import Spinner from '../utils/Spinner'
 import WorkProfile from '../WorkProfile'
 import AddWorkProfile from '../AddWorkProfile'
+import { loadUser } from '../../actions/auth'
+import useToggle from '../../hooks/useToggle'
+import EditWorkProfile from '../EditWorkProfile'
 
-const Profile = ({ auth: { loading, user } }) => {
+const Profile = ({
+  loadUser,
+  auth: { loading, user },
+  toggleWorkProfile,
+  toggleAddWorkProfile,
+  toggleEditWorkProfile,
+}) => {
+  useEffect(() => {
+    loadUser()
+  }, [])
+
   return loading && user === null ? (
     <Spinner />
   ) : (
@@ -95,8 +108,9 @@ const Profile = ({ auth: { loading, user } }) => {
         </Row>
       </section>
       <div>
-        <WorkProfile />
-        <AddWorkProfile />
+        {toggleWorkProfile && <WorkProfile />}
+        {toggleAddWorkProfile && <AddWorkProfile />}
+        {toggleEditWorkProfile && <EditWorkProfile />}
       </div>
     </>
   )
@@ -104,10 +118,17 @@ const Profile = ({ auth: { loading, user } }) => {
 
 Profile.propTypes = {
   auth: PropTypes.object.isRequired,
+  loafUser: PropTypes.func.isRequired,
+  toggleWorkProfile: PropTypes.bool.isRequired,
+  toggleAddWorkProfile: PropTypes.bool.isRequired,
+  toggleEditWorkProfile: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  toggleWorkProfile: state.toggle.workProfile,
+  toggleAddWorkProfile: state.toggle.addWorkProfile,
+  toggleEditWorkProfile: state.toggle.editWorkProfile,
 })
 
-export default connect(mapStateToProps)(Profile)
+export default connect(mapStateToProps, { loadUser })(Profile)

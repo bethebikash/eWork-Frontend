@@ -13,7 +13,7 @@ import { FormControl, Select, MenuItem, InputLabel, Chip, Grid, TextField } from
 import { getSkills } from '../actions/skills'
 import { getTechnologies } from '../actions/technologies'
 import Spinner from './utils/Spinner'
-import { addWorkProfile } from '../actions/workProfile'
+import { editWorkProfile } from '../actions/workProfile'
 import { Card } from 'react-bootstrap'
 
 const useStyles = makeStyles((theme) => ({
@@ -71,8 +71,7 @@ function getStyles(items, item, theme) {
   }
 }
 
-const AddWorkProfile = ({
-  addWorkProfile,
+const EditWorkProfile = ({
   skillArray,
   techArray,
   loadSkill,
@@ -80,6 +79,11 @@ const AddWorkProfile = ({
   getSkills,
   getTechnologies,
   userId,
+  wpId,
+  userSkills,
+  userTechnologies,
+  userRate,
+  editWorkProfile
 }) => {
   const classes = useStyles()
   const theme = useTheme()
@@ -89,9 +93,9 @@ const AddWorkProfile = ({
     getTechnologies()
   }, [])
 
-  const [skills, setSkills] = useState([])
-  const [technologies, setTechnologies] = useState([])
-  const [rate, setRate] = useState('')
+  const [skills, setSkills] = useState(userSkills)
+  const [technologies, setTechnologies] = useState(userTechnologies)
+  const [rate, setRate] = useState(userRate)
 
   const [error, setError] = useState()
 
@@ -110,7 +114,7 @@ const AddWorkProfile = ({
     setError('')
   }
 
-  const onAddSubmit = (e) => {
+  const onEditSubmit = (e) => {
     e.preventDefault()
     if (skills.length === 0) {
       setError('skillNull')
@@ -128,14 +132,15 @@ const AddWorkProfile = ({
       const newSkills = skills.map((sk) => sk._id)
       const newTech = technologies.map((tech) => tech._id)
       const belongs_to = userId
-      addWorkProfile(newSkills, newTech, rate, belongs_to)
+
+      editWorkProfile(newSkills, newTech, rate, belongs_to, wpId)
     }
   }
 
   return (
     <Card className="bg-light shadow my-3">
       <Card.Header className="bg-white border-0">
-        <h3>Add Work Profile</h3>
+        <h3>Update Work Profile</h3>
       </Card.Header>
       <Card.Body>
         <Container component="main" maxWidth="md">
@@ -147,15 +152,16 @@ const AddWorkProfile = ({
                   <Work />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                  Add Work Profile
+                  Update Work Profile
                 </Typography>
-                <form className={classes.form} noValidate onSubmit={onAddSubmit}>
+                <form className={classes.form} noValidate onSubmit={onEditSubmit}>
                   <FormControl fullWidth className={classes.formControl}>
                     <InputLabel id="skill-mutiple-chip-label">Skills</InputLabel>
                     <Select
                       labelId="skill-mutiple-chip-label"
                       id="skill-mutiple-chip"
                       multiple
+                      defaultValue={userSkills}
                       value={skills}
                       onChange={handleChangeSkill}
                       input={<Input id="skill-select-multiple-chip" />}
@@ -170,6 +176,7 @@ const AddWorkProfile = ({
                     >
                       {skillArray.map((skillArr) => (
                         <MenuItem
+                          selected
                           key={skillArr._id}
                           value={skillArr}
                           style={getStyles(skillArr, skillArr.skill, theme)}
@@ -270,15 +277,19 @@ const AddWorkProfile = ({
   )
 }
 
-AddWorkProfile.propTypes = {
+EditWorkProfile.propTypes = {
   getSkills: PropTypes.func.isRequired,
   getTechnologies: PropTypes.func.isRequired,
-  addWorkProfile: PropTypes.func.isRequired,
+  editWorkProfile: PropTypes.func.isRequired,
   skillArray: PropTypes.array,
   technArray: PropTypes.array,
   loadSkill: PropTypes.bool.isRequired,
   loadTechnologies: PropTypes.bool.isRequired,
+  userSkills: PropTypes.array.isRequired,
+  userTechnologies: PropTypes.array.isRequired,
+  userRate: PropTypes.number.isRequired,
   userId: PropTypes.string.isRequired,
+  wpId: PropTypes.string.isRequired,
 }
 
 const mapStateProps = (state) => ({
@@ -287,8 +298,12 @@ const mapStateProps = (state) => ({
   loadSkill: state.skills.loading,
   loadTechnologies: state.technologies.loading,
   userId: state.auth.user._id,
+  userSkills: state.workProfile.workProfile.skills,
+  userTechnologies: state.workProfile.workProfile.technologies,
+  userRate: state.workProfile.workProfile.rate,
+  wpId: state.workProfile.workProfile._id
 })
 
-export default connect(mapStateProps, { getSkills, getTechnologies, addWorkProfile })(
-  AddWorkProfile
+export default connect(mapStateProps, { getSkills, getTechnologies, editWorkProfile })(
+  EditWorkProfile
 )

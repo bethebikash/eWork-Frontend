@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-// import { Alert as BootAlert } from 'react-bootstrap'
 import { makeStyles } from '@material-ui/core/styles'
 import MuiAlert from '@material-ui/lab/Alert'
 

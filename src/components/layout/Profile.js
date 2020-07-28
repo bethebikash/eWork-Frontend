@@ -8,7 +8,6 @@ import Spinner from '../utils/Spinner'
 import WorkProfile from '../WorkProfile'
 import AddWorkProfile from '../AddWorkProfile'
 import { loadUser } from '../../actions/auth'
-import useToggle from '../../hooks/useToggle'
 import EditWorkProfile from '../EditWorkProfile'
 
 const Profile = ({
@@ -118,7 +117,7 @@ const Profile = ({
 
 Profile.propTypes = {
   auth: PropTypes.object.isRequired,
-  loafUser: PropTypes.func.isRequired,
+  loadUser: PropTypes.func.isRequired,
   toggleWorkProfile: PropTypes.bool.isRequired,
   toggleAddWorkProfile: PropTypes.bool.isRequired,
   toggleEditWorkProfile: PropTypes.bool.isRequired,

@@ -68,7 +68,7 @@ const WorkProfile = ({
                   <hr />
                   <h4>Rate: per hour (in Rs)</h4>
                   <div>
-                    <h3 class="text-secondary font-weight-bold">{workProfile.rate}</h3>
+                    <h3 className="text-secondary font-weight-bold">{workProfile.rate}</h3>
                   </div>
                 </Col>
               </Row>

@@ -10,6 +10,8 @@ import theme from './Theme'
 import Alert from './utils/Alert'
 import Profile from './layout/Profile'
 import PrivateRoute from './PrivateRoute'
+import EditProfile from './layout/EditProfile'
+import ChangePassword from './layout/ChangePassword'
 
 const Router = () => {
   return (
@@ -22,7 +24,9 @@ const Router = () => {
             <Route exact path="/" component={Home} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
-            <PrivateRoute exact path="/profile" component={Profile} />
+            <PrivateRoute exact path="/me" component={Profile} />
+            <PrivateRoute exact path="/me/edit" component={EditProfile} />
+            <PrivateRoute exact path="/me/change-password" component={ChangePassword} />
           </Switch>
         </Container>
       </ThemeProvider>

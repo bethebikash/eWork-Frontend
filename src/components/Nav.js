@@ -25,19 +25,19 @@ const Nav = ({ auth: { isAuthenticated, loading, user }, logout }) => {
                     <>
                       {user.role === 'work' && (
                         <>
-                          <NavLink className="nav-link m-auto" to="/profile">
+                          <NavLink className="nav-link m-auto" to="/me">
                             My Task
                           </NavLink>
                         </>
                       )}
                       {user.role === 'hire' && (
                         <>
-                          <NavLink className="nav-link m-auto" to="/profile">
+                          <NavLink className="nav-link m-auto" to="/me">
                             Post Jobs
                           </NavLink>
                         </>
                       )}
-                      <NavLink className="nav-link m-auto" to="/profile">
+                      <NavLink className="nav-link m-auto" to="/me">
                         Profile
                       </NavLink>
                     </>

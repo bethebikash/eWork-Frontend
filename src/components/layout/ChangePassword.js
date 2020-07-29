@@ -10,17 +10,26 @@ import axios from 'axios'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { setAlert } from '../../actions/alert'
+import { Row, Col } from 'react-bootstrap'
+import { LockTwoTone } from '@material-ui/icons'
+import { Avatar } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(12),
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+    height: '100%',
+  },
+  avatar: {
+    margin: '1rem auto',
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%',
     marginTop: theme.spacing(1),
+    background: 'white',
+    padding: '1rem',
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -70,7 +79,7 @@ const ChangePassword = ({ setAlert }) => {
         setReditect(true)
         setAlert('Password has been changed successfully', 'success')
       } catch (error) {
-        setAlert(error.response.error.message, 'danger')
+        setAlert(error.response.data.error.message, 'error')
       }
     }
   }
@@ -81,10 +90,18 @@ const ChangePassword = ({ setAlert }) => {
 
   return (
     <>
-      <Container className="center" component="main" maxWidth="sm">
+      <Container className="h-auto" component="main" maxWidth="sm">
         <CssBaseline />
         <div className={classes.paper}>
           <form className={classes.form} noValidate onSubmit={(e) => onSubmit(e)}>
+            <Row>
+              <Col md={12} className="text-center text-muted py-3">
+                <Avatar className={classes.avatar}>
+                  <LockTwoTone />
+                </Avatar>
+                <h2>Change Password</h2>
+              </Col>
+            </Row>
             <TextField
               variant="outlined"
               margin="dense"

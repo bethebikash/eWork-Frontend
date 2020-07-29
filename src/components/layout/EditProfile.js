@@ -10,28 +10,31 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera'
 import axios from 'axios'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { IconButton, Grid } from '@material-ui/core'
+import { IconButton, Grid, Avatar } from '@material-ui/core'
 import { setAlert } from '../../actions/alert'
 import { Col, Row } from 'react-bootstrap'
 import defaultPic from '~/../../public/default_profile.png'
+import { EditOutlined } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(4),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    background: 'white',
+    padding: '1rem'
   },
   input: {
     display: 'none',
   },
   avatar: {
-    margin: theme.spacing(1),
+    margin: '1rem auto',
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%',
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(3),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -82,7 +85,7 @@ const EditProfile = ({ setAlert, user }) => {
         setAlert('Profile Picture Updated Successfully', 'success')
         setReditect(true)
       } catch (error) {
-        setAlert(error.response.data.error.message, 'danger')
+        setAlert(error.response.data.error.message, 'error')
       }
     }
   }
@@ -121,7 +124,7 @@ const EditProfile = ({ setAlert, user }) => {
         setReditect(true)
         setAlert('Profile Updated Successfully', 'success')
       } catch (error) {
-        setAlert(error.response.data.error.message, 'danger')
+        setAlert(error.response.data.error.message, 'error')
       }
     }
   }
@@ -135,9 +138,17 @@ const EditProfile = ({ setAlert, user }) => {
       <Container component="main" maxWidth="md">
         <CssBaseline />
         <div className={classes.paper}>
+        <Row>
+              <Col md={12} className="text-center text-muted py-3">
+                <Avatar className={classes.avatar}>
+                  <EditOutlined />
+                </Avatar>
+                <h2>Edit Profile</h2>
+              </Col>
+            </Row>
           <Row className="text-center">
             <Col md={6}>
-              <div className="mt-2">
+              <div className="mt-4">
                 {!selectedFile ? (
                   <>
                     {user.image ? (

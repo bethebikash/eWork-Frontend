@@ -18,8 +18,9 @@ const Router = () => {
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <Nav />
+        <Alert />
         <Container>
-          <Alert />
+          
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/register" component={Register} />

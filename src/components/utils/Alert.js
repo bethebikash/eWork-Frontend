@@ -7,9 +7,12 @@ import MuiAlert from '@material-ui/lab/Alert'
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    '& > * + *': {
-      marginTop: theme.spacing(2),
-    },
+    marginTop: '-1rem',
+    position: 'fixed',
+    alignItems: 'center',
+    display: 'grid',
+    justifyItems: 'fit',
+    zIndex: '999'
   },
 }))
 
@@ -19,7 +22,7 @@ const Alert = ({ alerts }) => {
   return (
     <div className={classes.root}>
       {alerts.map((alert) => (
-        <MuiAlert key={alert.id} className="text-center" severity={alert.alertType}>
+        <MuiAlert key={alert.id} className="justify-content-center p-2 font-weight-bold" severity={alert.alertType}>
           {alert.msg}
         </MuiAlert>
       ))}

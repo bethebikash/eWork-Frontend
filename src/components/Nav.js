@@ -32,7 +32,7 @@ const Nav = ({ auth: { isAuthenticated, loading, user }, logout }) => {
                       )}
                       {user.role === 'hire' && (
                         <>
-                          <NavLink className="nav-link m-auto" to="/me">
+                          <NavLink className="nav-link m-auto" to="/job/post">
                             Post Jobs
                           </NavLink>
                         </>
@@ -57,9 +57,14 @@ const Nav = ({ auth: { isAuthenticated, loading, user }, logout }) => {
                       Logout
                     </a>
                   ) : (
-                    <NavLink className="nav-link m-auto" to="/login">
-                      Login
-                    </NavLink>
+                    <>
+                      <NavLink className="nav-link m-auto" to="/register">
+                        Register
+                      </NavLink>
+                      <NavLink className="nav-link m-auto" to="/login">
+                        Login
+                      </NavLink>
+                    </>
                   )}
                 </>
               )}

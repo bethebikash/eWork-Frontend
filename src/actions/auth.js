@@ -37,6 +37,7 @@ export const register = ({ name, username, address, phone, email, password, role
       type: REGISTER_SUCCESS,
       payload: res.data
     })
+    dispatch(loadUser())
     dispatch(setAlert('Your account has been created successfully', 'success'))
   } catch (error) {
     const err = error.response.data.error.message

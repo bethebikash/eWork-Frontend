@@ -50,6 +50,7 @@ const ChangePassword = ({ setAlert }) => {
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
+    setValidation('')
   }
 
   const onSubmit = async (e) => {
@@ -71,11 +72,7 @@ const ChangePassword = ({ setAlert }) => {
             'Content-Type': 'application/json',
           },
         }
-        const res = await axios.patch(
-          'http://localhost:5000/users/me/change-password',
-          newData,
-          config
-        )
+        await axios.patch('/users/me/change-password', newData, config)
         setReditect(true)
         setAlert('Password has been changed successfully', 'success')
       } catch (error) {
@@ -116,7 +113,7 @@ const ChangePassword = ({ setAlert }) => {
               autoComplete="oldpassword"
             />
             {validation === 'nullOldpassword' && (
-              <span className="error">Old Password is required</span>
+              <span className="text-danger font-weight-bold">Old Password is required</span>
             )}
             <TextField
               variant="outlined"
@@ -132,10 +129,10 @@ const ChangePassword = ({ setAlert }) => {
               autoComplete="newpassword"
             />
             {validation === 'nullNewPassword' && (
-              <span className="error">New Password is required</span>
+              <span className="text-danger font-weight-bold">New Password is required</span>
             )}
             {validation === 'minNewPassword' && (
-              <span className="error">Must be at least 6 character</span>
+              <span className="text-danger font-weight-bold">Must be at least 6 character</span>
             )}
             <Button
               type="submit"

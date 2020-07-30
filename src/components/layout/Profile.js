@@ -106,11 +106,13 @@ const Profile = ({
           </Col>
         </Row>
       </section>
-      <div>
-        {toggleWorkProfile && <WorkProfile />}
-        {toggleAddWorkProfile && <AddWorkProfile />}
-        {toggleEditWorkProfile && <EditWorkProfile />}
-      </div>
+      {user.role === 'work' && (
+        <div>
+          {toggleWorkProfile && <WorkProfile />}
+          {toggleAddWorkProfile && <AddWorkProfile />}
+          {toggleEditWorkProfile && <EditWorkProfile />}
+        </div>
+      )}
     </>
   )
 }

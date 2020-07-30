@@ -12,6 +12,7 @@ import Profile from './layout/Profile'
 import PrivateRoute from './PrivateRoute'
 import EditProfile from './layout/EditProfile'
 import ChangePassword from './layout/ChangePassword'
+import AddJob from './layout/AddJob'
 
 const Router = () => {
   return (
@@ -28,6 +29,7 @@ const Router = () => {
             <PrivateRoute exact path="/me" component={Profile} />
             <PrivateRoute exact path="/me/edit" component={EditProfile} />
             <PrivateRoute exact path="/me/change-password" component={ChangePassword} />
+            <PrivateRoute exact path="/job/post" component={AddJob} />
           </Switch>
         </Container>
       </ThemeProvider>

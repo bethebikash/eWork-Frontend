@@ -10,7 +10,7 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera'
 import axios from 'axios'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { IconButton, Grid, Avatar } from '@material-ui/core'
+import { IconButton, Avatar } from '@material-ui/core'
 import { setAlert } from '../../actions/alert'
 import { Col, Row } from 'react-bootstrap'
 import defaultPic from '~/../../public/default_profile.png'
@@ -60,9 +60,10 @@ const EditProfile = ({ setAlert, user }) => {
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
+    setValidation()
   }
 
-  const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  const emailPattern = /^(([^<>()\\.,;:\s@"]+(\.[^<>()\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
   const onFileChange = async (e) => {
     setSelectedFile(e.target.files[0])
@@ -81,7 +82,7 @@ const EditProfile = ({ setAlert, user }) => {
       const fd = new FormData()
       fd.append('image', selectedFile)
       try {
-        await axios.post('http://localhost:5000/users/me/upload', fd)
+        await axios.post('/users/me/upload', fd)
         setAlert('Profile Picture Updated Successfully', 'success')
         setReditect(true)
       } catch (error) {
@@ -120,7 +121,7 @@ const EditProfile = ({ setAlert, user }) => {
             'Content-Type': 'application/json',
           },
         }
-        const res = await axios.put('http://localhost:5000/users/me', newData, config)
+        await axios.put('/users/me', newData, config)
         setReditect(true)
         setAlert('Profile Updated Successfully', 'success')
       } catch (error) {
@@ -169,7 +170,7 @@ const EditProfile = ({ setAlert, user }) => {
                   <>
                     <img
                       src={imageUrl}
-                      alt="selected image"
+                      alt="selected"
                       style={{ height: '230px', width: '230px' }}
                     />
                   </>
@@ -191,7 +192,7 @@ const EditProfile = ({ setAlert, user }) => {
                   <PhotoCamera />
                 </IconButton>
               </label>
-              {validation === 'nullFile' && <span className="error">Choose a file</span>}
+              {validation === 'nullFile' && <span className="text-danger font-weight-bold">Choose a file</span>}
               <Button fullWidth variant="text" color="primary" onClick={(e) => onFileUpload(e)}>
                 Change Profile Photo
               </Button>
@@ -210,7 +211,7 @@ const EditProfile = ({ setAlert, user }) => {
                   onChange={(e) => onChange(e)}
                   autoComplete="name"
                 />
-                {validation === 'nullName' && <span className="error">Name is required</span>}
+                {validation === 'nullName' && <span className="text-danger font-weight-bold">Name is required</span>}
                 <TextField
                   variant="outlined"
                   margin="dense"
@@ -223,8 +224,8 @@ const EditProfile = ({ setAlert, user }) => {
                   onChange={(e) => onChange(e)}
                   autoComplete="email"
                 />
-                {validation === 'nullEmail' && <span className="error">Email is required</span>}
-                {validation === 'invalideEmail' && <span className="error">Invalid email</span>}
+                {validation === 'nullEmail' && <span className="text-danger font-weight-bold">Email is required</span>}
+                {validation === 'invalideEmail' && <span className="text-danger font-weight-bold">Invalid email</span>}
                 <TextField
                   variant="outlined"
                   margin="dense"
@@ -237,7 +238,7 @@ const EditProfile = ({ setAlert, user }) => {
                   onChange={(e) => onChange(e)}
                   autoComplete="address"
                 />
-                {validation === 'nullAddress' && <span className="error">Address is required</span>}
+                {validation === 'nullAddress' && <span className="text-danger font-weight-bold">Address is required</span>}
                 <TextField
                   variant="outlined"
                   margin="dense"
@@ -250,7 +251,7 @@ const EditProfile = ({ setAlert, user }) => {
                   onChange={(e) => onChange(e)}
                   autoComplete="phone"
                 />
-                {validation === 'nullPhone' && <span className="error">Phone is required</span>}
+                {validation === 'nullPhone' && <span className="text-danger font-weight-bold">Phone is required</span>}
                 <TextField
                   variant="outlined"
                   margin="dense"
@@ -264,10 +265,10 @@ const EditProfile = ({ setAlert, user }) => {
                   autoComplete="username"
                 />
                 {validation === 'nullUsername' && (
-                  <span className="error">Username is required</span>
+                  <span className="text-danger font-weight-bold">Username is required</span>
                 )}
                 {validation === 'minUsername' && (
-                  <span className="error">Can't be less than 6 character</span>
+                  <span className="text-danger font-weight-bold">Can't be less than 6 character</span>
                 )}
                 <Button
                   type="submit"

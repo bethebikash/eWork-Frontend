@@ -32,8 +32,8 @@ const Nav = ({ auth: { isAuthenticated, loading, user }, logout }) => {
                       )}
                       {user.role === 'hire' && (
                         <>
-                          <NavLink className="nav-link m-auto" to="/job/post">
-                            Post Jobs
+                          <NavLink className="nav-link m-auto" to="/job">
+                            Manage Jobs
                           </NavLink>
                         </>
                       )}

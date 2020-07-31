@@ -31,9 +31,15 @@ export const TECHNOLOGIES_ERROR = 'TECHNOLOGIES_ERROR'
 export const LOGOUT = 'LOGOUT'
 export const ADMIN_LOGOUT = 'ADMIN_LOGOUT'
 
-// export const GET_MYBOOKINGS = 'GET_MYBOOKINGS'
-// export const CLEAR_MYBOOKINGS = 'CLEAR_MYBOOKINGS'
-// export const MYBOOKING_ERROR = 'MYBOOKING_ERROR'
+export const GET_JOBS = 'GET_JOBS'
+export const JOBS_ERROR = 'JOBS_ERROR'
+
+export const GET_MYJOBS = 'GET_MYJOBS'
+export const CLEAR_MYJOBS = 'CLEAR_MYJOBS'
+export const MYJOBS_ERROR = 'MYJOBS_ERROR'
+
+export const GET_BIDS = 'GET_BIDS'
+export const BIDS_ERROR = 'BIDS_ERROR'
 
 // export const GET_SERVICES = 'GET_SERVICES'
 // export const SERVICES_ERROR = 'SERVICES_ERROR'
@@ -63,8 +69,3 @@ export const ADMIN_LOGOUT = 'ADMIN_LOGOUT'
 // export const SET_CATEGORY = 'SET_CATEGORY'
 // export const SET_SERVICE = 'SET_CATEGORY'
 // export const SET_BOOKING = 'SET_BOOKING'
-
-
-
-
-

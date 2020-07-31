@@ -18,7 +18,7 @@ const Profile = ({
   toggleEditWorkProfile,
 }) => {
   useEffect(() => {
-    loadUser()
+      loadUser()
   }, [])
 
   return loading && user === null ? (

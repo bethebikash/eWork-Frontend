@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Spinner from './utils/Spinner'
-import { Row, Col, Card, Button } from 'react-bootstrap'
+import { Row, Col} from 'react-bootstrap'
 import Axios from 'axios'
-import { Grid } from '@material-ui/core'
+import { Card, Grid, Button } from '@material-ui/core'
 
 const Bids = ({ jobId }) => {
   const [bids, setBids] = useState('')
@@ -31,10 +31,34 @@ const Bids = ({ jobId }) => {
           </Col>
         </Row>
       ) : (
-        <Row className="py-3">
-          {bids.map((bid) => (
-            <pre key={bid._id}>{JSON.stringify(bid)}</pre>
-          ))}
+        <Row>
+          <Col md={12}>
+            <Row className="text-center pb-1">
+              <Col md={12}>
+                <span className="text-success font-weight-bold">Bids for this job</span>
+              </Col>
+            </Row>
+            {bids.map((bid) => (
+              <Card key={bid._id} className="p-2 px-3 my-1">
+                <Grid className="d-flex justify-content-between">
+                  <Grid item>
+                    <span className="font-weight-bold text-primary">{bid.bidder.name}</span> bid to
+                    take this job
+                  </Grid>
+                  <Grid item>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="blue"
+                      size="medium"
+                    >
+                      Accept This Bid
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Card>
+            ))}
+          </Col>
         </Row>
       )}
     </>

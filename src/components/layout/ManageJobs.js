@@ -5,9 +5,8 @@ import Spinner from '../utils/Spinner'
 import { getMyJobs } from '../../actions/myjobs'
 import Bids from '../Bids'
 import { Card, Grid, Button } from '@material-ui/core'
-import { Edit, Delete } from '@material-ui/icons'
+import { Edit, Delete, CloudDownload } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
-
 
 const ManageJobs = ({ getMyJobs, myjobs: { loading, myjobs }, user: { _id } }) => {
   useEffect(() => {
@@ -26,28 +25,33 @@ const ManageJobs = ({ getMyJobs, myjobs: { loading, myjobs }, user: { _id } }) =
       {myjobs.map((myjob) => (
         <div key={myjob._id}>
           <Card className="p-3 my-4 shadow">
+            <div className="d-flex justify-content-end">
+              <Link>
+                <Edit
+                  onClick={(e) => {
+                    alert('edit function')
+                  }}
+                  className="text-info"
+                />
+              </Link>
+              <Link>
+                <Delete
+                  onClick={(e) => {
+                    alert('delete function')
+                  }}
+                  className="text-danger"
+                />
+              </Link>
+            </div>
             <Grid container>
-              <Grid sm={12} item>
-                <div className="d-flex justify-content-end">
-                  <Link>
-                    <Edit className="text-info" />
-                  </Link>
-                  <Link>
-                    <Delete
-                      onClick={(e) => {
-                        alert('hello')
-                      }}
-                      className="text-danger"
-                    />
-                  </Link>
-                </div>
-              </Grid>
-              <Grid sm={6} item>
+              <Grid sm={6} xs={12} item>
                 <h2>{myjob.title}</h2>
                 <p>{myjob.description}</p>
               </Grid>
-              <Grid sm={6} item>
-                <p>Price: <span className="font-weight-bold">Rs.{myjob.price}</span></p>
+              <Grid sm={6} xs={12} item>
+                <p>
+                  Price: <span className="font-weight-bold">Rs.{myjob.price}</span>
+                </p>
                 {!myjob.taken_by ? (
                   <p>The job is still not taken</p>
                 ) : (
@@ -56,7 +60,19 @@ const ManageJobs = ({ getMyJobs, myjobs: { loading, myjobs }, user: { _id } }) =
                     <span className="text-primary">{myjob.taken_by.name}</span>
                   </p>
                 )}
-                {myjob.file === '' && <p>here is your file</p>}
+                {myjob.file === '' ? (
+                  <p>Task is not completed yet.</p>
+                ) : (
+                  <p>
+                    Task is completed.{' '}
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      size="small"
+                      startIcon={<CloudDownload />}
+                    >Download File</Button>
+                  </p>
+                )}
               </Grid>
             </Grid>
             <hr />

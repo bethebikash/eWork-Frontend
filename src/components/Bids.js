@@ -50,9 +50,9 @@ const Bids = ({ jobId }) => {
                       type="submit"
                       variant="contained"
                       color="blue"
-                      size="medium"
+                      size="small"
                     >
-                      Accept This Bid
+                      Accept Bid
                     </Button>
                   </Grid>
                 </Grid>

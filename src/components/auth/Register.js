@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -269,7 +269,7 @@ const Register = ({ register, isAuthenticated }) => {
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
-                <Link to="/login">Already have an account? Sign in</Link>
+                <Link to="/login" className="link">Already have an account? Sign in</Link>
               </Grid>
             </Grid>
           </form>

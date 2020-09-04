@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -141,13 +141,13 @@ const AddWorkProfile = ({
         <Card className="bg-light shadow">
           <Card.Header className="bg-white border-0">
             <Row>
-              <Col md={9}>
+              <Col md={12} className="d-flex justify-content-between">
                 <h3 className="mb-0">Add Work Profile</h3>
-              </Col>
-              <Col md={3}>
                 <Button
                   onClick={() => (setToggleWP(true), setToggleAWP(false))}
-                  className="btn btn-sm btn-info my-1"
+                  variant="contained"
+                  size="small"
+                  color="secondary"
                 >
                   ← Back
                 </Button>

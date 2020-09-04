@@ -12,4 +12,14 @@ body {
   line-height: 1.7;
   font-weight: 400;
   font-size: $md;
+  background-color: $background;
+}
+
+.link {
+  color: #000;
+  text-decoration: none;
+}
+.link:hover {
+   color: #ff5500;
+   text-decoration: none;
 }

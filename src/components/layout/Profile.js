@@ -9,6 +9,7 @@ import WorkProfile from '../WorkProfile'
 import AddWorkProfile from '../AddWorkProfile'
 import { loadUser } from '../../actions/auth'
 import EditWorkProfile from '../EditWorkProfile'
+import { Button } from '@material-ui/core'
 
 const Profile = ({
   loadUser,
@@ -18,7 +19,7 @@ const Profile = ({
   toggleEditWorkProfile,
 }) => {
   useEffect(() => {
-      loadUser()
+    loadUser()
   }, [])
 
   return loading && user === null ? (
@@ -33,16 +34,18 @@ const Profile = ({
               <Card.Header className="bg-white border-0">
                 <Row>
                   <Col md={6}>
-                    <h3 className="mb-0">Personal Details</h3>
+                    <h3 className="mb-0 block">Personal Details</h3>
                   </Col>
-                  <Col md={3}>
-                    <Link to="/me/edit" className="btn btn-sm btn-primary my-1">
-                      Edit Profile
+                  <Col md={6} className="d-flex justify-content-between">
+                    <Link to="/me/edit" className="link">
+                      <Button variant="contained" color="primary" size="small">
+                        Edit Profile
+                      </Button>
                     </Link>
-                  </Col>
-                  <Col md={3}>
-                    <Link to="/me/change-password" className="btn btn-sm btn-warning my-1">
-                      Change Password
+                    <Link to="/me/change-password" className="link">
+                      <Button variant="contained" color="primary" size="small">
+                        Change Password
+                      </Button>
                     </Link>
                   </Col>
                 </Row>

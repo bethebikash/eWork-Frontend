@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -67,7 +67,7 @@ const Login = ({ login, isAuthenticated }) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Login
+          Sign In
         </Typography>
         <form className={classes.form} onSubmit={onSubmit}>
           <TextField
@@ -112,7 +112,7 @@ const Login = ({ login, isAuthenticated }) => {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link to="/register">Don't have an account? Sign Up</Link>
+              <Link to="/register" className="link">Don't have an account? Sign Up</Link>
             </Grid>
           </Grid>
         </form>

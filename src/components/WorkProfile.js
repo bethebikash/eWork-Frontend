@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { getWorkProfile } from '../actions/workProfile'
 import Spinner from './utils/Spinner'
-import { Row, Col, Card, Button } from 'react-bootstrap'
+import { Button } from '@material-ui/core'
+import { Row, Col, Card } from 'react-bootstrap'
 import { setToggleWP, setToggleAWP, setToggleEWP } from '../actions/toggle'
 
 const WorkProfile = ({
@@ -29,14 +30,14 @@ const WorkProfile = ({
         <Card className="bg-light shadow">
           <Card.Header className="bg-white border-0">
             <Row>
-              <Col md={9}>
+              <Col md={12} className="d-flex justify-content-between">
                 <h3 className="mb-0">Work Profile</h3>
-              </Col>
-              <Col md={3}>
                 {workProfile !== null && (
                   <Button
+                    variant="contained"
+                    color="primary"
+                    size="small"
                     onClick={() => (setToggleWP(false), setToggleEWP(true))}
-                    className="btn btn-sm btn-info my-1"
                   >
                     Update Work Profile
                   </Button>
@@ -51,7 +52,7 @@ const WorkProfile = ({
                   <h4>Skills</h4>
                   <div>
                     {workProfile.skills.map((skill) => (
-                      <span className="pills" key={skill._id}>
+                      <span className="pills d-inline-block" key={skill._id}>
                         {skill.skill}
                       </span>
                     ))}
@@ -60,7 +61,7 @@ const WorkProfile = ({
                   <h4>Technologies</h4>
                   <div>
                     {workProfile.technologies.map((technology) => (
-                      <span className="pills" key={technology._id}>
+                      <span className="pills d-inline-block" key={technology._id}>
                         {technology.technology}
                       </span>
                     ))}

@@ -12,6 +12,7 @@ body {
   line-height: 1.7;
   font-weight: 400;
   font-size: $md;
+  color: $primary;
   background-color: $background;
 }
 
@@ -22,4 +23,8 @@ body {
 .link:hover {
    color: #ff5500;
    text-decoration: none;
+}
+
+.text-color{
+  color: $secondary;
 }

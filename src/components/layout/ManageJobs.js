@@ -17,7 +17,7 @@ const ManageJobs = ({ getMyJobs, myjobs: { loading, myjobs }, user: { _id } }) =
     <Spinner />
   ) : (
     <>
-      <Link>
+      <Link to="job/post">
         <Button variant="contained" color="primary">
           Post a Job
         </Button>
@@ -29,7 +29,7 @@ const ManageJobs = ({ getMyJobs, myjobs: { loading, myjobs }, user: { _id } }) =
               <Link>
                 <Edit
                   onClick={(e) => {
-                    alert('edit function')
+                    
                   }}
                   className="text-info"
                 />
@@ -45,12 +45,12 @@ const ManageJobs = ({ getMyJobs, myjobs: { loading, myjobs }, user: { _id } }) =
             </div>
             <Grid container>
               <Grid sm={6} xs={12} item>
-                <h2>{myjob.title}</h2>
+                <h2 className="text-color font-weight-bold">{myjob.title}</h2>
                 <p>{myjob.description}</p>
               </Grid>
               <Grid sm={6} xs={12} item>
                 <p>
-                  Price: <span className="font-weight-bold">Rs.{myjob.price}</span>
+                  Price: <span className="font-weight-bold text-color">Rs.{myjob.price}</span>
                 </p>
                 {!myjob.taken_by ? (
                   <p>The job is still not taken</p>

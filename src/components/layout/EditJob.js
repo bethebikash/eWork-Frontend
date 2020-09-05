@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid'
-import { WorkOutlined } from '@material-ui/icons'
+import { WorkOffOutlined } from '@material-ui/icons'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const AddJob = ({ user, setAlert }) => {
+const EditJob = ({ setAlert }) => {
   const classes = useStyles()
 
   const [formData, setFormData] = useState({
@@ -67,12 +67,10 @@ const AddJob = ({ user, setAlert }) => {
     } else if (isNaN(price)) {
       setError('priceNum')
     } else {
-      const posted_by = user._id
       const newData = {
         title,
         description,
         price,
-        posted_by,
       }
       try {
         const config = {
@@ -80,9 +78,9 @@ const AddJob = ({ user, setAlert }) => {
             'Content-Type': 'application/json',
           },
         }
-        await axios.post('/jobs/', newData, config)
+        await axios.patch('/jobs/', newData, config)
         setReditect(true)
-        setAlert('Job has been posted successfully', 'success')
+        setAlert('Job has been updated successfully', 'success')
       } catch (error) {
         setAlert(error.response.data.error.message, 'error')
       }
@@ -98,10 +96,10 @@ const AddJob = ({ user, setAlert }) => {
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <WorkOutlined />
+          <WorkOffOutlined />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Post a Job
+          Update a Job
         </Typography>
         <form className={classes.form} onSubmit={(e) => onSubmit(e)}>
           <Grid container spacing={2}>
@@ -173,7 +171,7 @@ const AddJob = ({ user, setAlert }) => {
   )
 }
 
-AddJob.propTypes = {
+EditJob.propTypes = {
   user: PropTypes.object.isRequired,
   setAlert: PropTypes.func.isRequired,
 }

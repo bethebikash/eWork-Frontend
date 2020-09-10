@@ -14,6 +14,7 @@ import EditProfile from './layout/EditProfile'
 import ChangePassword from './layout/ChangePassword'
 import AddJob from './layout/AddJob'
 import ManageJobs from './layout/ManageJobs'
+import EditJob from './layout/EditJob'
 
 const Router = () => {
   return (
@@ -32,6 +33,7 @@ const Router = () => {
             <PrivateRoute exact path="/me/change-password" component={ChangePassword} />
             <PrivateRoute exact path="/job" component={ManageJobs} />
             <PrivateRoute exact path="/job/post" component={AddJob} />
+            <PrivateRoute exact path="/job/edit" component={EditJob} />
           </Switch>
         </Container>
       </ThemeProvider>

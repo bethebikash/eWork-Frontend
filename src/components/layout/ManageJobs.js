@@ -3,12 +3,13 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Spinner from '../utils/Spinner'
 import { getMyJobs } from '../../actions/myjobs'
+import { setJob } from '../../actions/jobs'
 import Bids from '../Bids'
 import { Card, Grid, Button } from '@material-ui/core'
 import { Edit, Delete, CloudDownload } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
 
-const ManageJobs = ({ getMyJobs, myjobs: { loading, myjobs }, user: { _id } }) => {
+const ManageJobs = ({ setJob, getMyJobs, myjobs: { loading, myjobs }, user: { _id } }) => {
   useEffect(() => {
     getMyJobs('posted_by', _id)
   }, [])
@@ -26,12 +27,12 @@ const ManageJobs = ({ getMyJobs, myjobs: { loading, myjobs }, user: { _id } }) =
         <div key={myjob._id}>
           <Card className="p-3 my-4 shadow">
             <div className="d-flex justify-content-end">
-              <Link>
+              <Link to="job/edit">
                 <Edit
-                  onClick={(e) => {
-                    
-                  }}
                   className="text-info"
+                  onClick={(e) => {
+                    setJob(myjob)
+                  }}
                 />
               </Link>
               <Link>
@@ -70,7 +71,9 @@ const ManageJobs = ({ getMyJobs, myjobs: { loading, myjobs }, user: { _id } }) =
                       color="secondary"
                       size="small"
                       startIcon={<CloudDownload />}
-                    >Download File</Button>
+                    >
+                      Download File
+                    </Button>
                   </p>
                 )}
               </Grid>
@@ -88,6 +91,7 @@ ManageJobs.propTypes = {
   myjobs: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   getMyJobs: PropTypes.func.isRequired,
+  setJob: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
@@ -95,4 +99,4 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
 })
 
-export default connect(mapStateToProps, { getMyJobs })(ManageJobs)
+export default connect(mapStateToProps, { getMyJobs, setJob })(ManageJobs)

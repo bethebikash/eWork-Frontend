@@ -24,7 +24,7 @@ const Bids = ({ jobId }) => {
     </>
   ) : (
     <>
-      {bids.length == 0 ? (
+      {bids.length === 0 ? (
         <Row className="text-center">
           <Col md={12}>
             <span className="text-danger font-weight-bold">No bid for this job</span>
@@ -49,7 +49,7 @@ const Bids = ({ jobId }) => {
                     <Button
                       type="submit"
                       variant="contained"
-                      color="blue"
+                      color="secondary"
                       size="small"
                     >
                       Accept Bid

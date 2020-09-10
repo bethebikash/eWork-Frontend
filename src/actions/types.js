@@ -31,6 +31,7 @@ export const TECHNOLOGIES_ERROR = 'TECHNOLOGIES_ERROR'
 export const LOGOUT = 'LOGOUT'
 export const ADMIN_LOGOUT = 'ADMIN_LOGOUT'
 
+export const SET_JOB = 'SET_JOB'
 export const GET_JOBS = 'GET_JOBS'
 export const JOBS_ERROR = 'JOBS_ERROR'
 

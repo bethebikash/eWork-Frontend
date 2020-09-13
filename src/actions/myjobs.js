@@ -5,7 +5,7 @@ import { setAlert } from './alert'
 // get jobs by query
 export const getMyJobs = (query, id) => async (dispatch) => {
   try {
-    const res = await axios.get(`/jobs?${query}=${id}`)
+    const res = await axios.get(`/jobs?${query}=${id}&?sortBy=createdAt:desc`)
     dispatch({
       type: GET_MYJOBS,
       payload: res.data

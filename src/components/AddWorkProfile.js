@@ -138,7 +138,7 @@ const AddWorkProfile = ({
   return (
     <Row className="py-3">
       <Col>
-        <Card className="bg-light shadow">
+        <Card className="bg-white border-0 shadow">
           <Card.Header className="bg-white border-0">
             <Row>
               <Col md={12} className="d-flex justify-content-between">
@@ -257,7 +257,7 @@ const AddWorkProfile = ({
                           fullWidth
                           id="rate"
                           size="small"
-                          label="Rate (per hour in Rs)"
+                          label="Rate (per task in Rs)"
                         />
                         {error === 'rateNull' && (
                           <span className="text-danger font-weight-bold">rate is required</span>

@@ -5,7 +5,7 @@ import { setAlert } from './alert'
 // get jobs
 export const getJobs = () => async (dispatch) => {
   try {
-    const res = await axios.get(`/jobs?status=available?sortBy=createdAt:desc`)
+    const res = await axios.get(`/jobs?status=available&?sortBy=createdAt:desc`)
     dispatch({
       type: GET_JOBS,
       payload: res.data

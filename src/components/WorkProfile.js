@@ -27,7 +27,7 @@ const WorkProfile = ({
     <Row className="py-3">
       <Col className="col-12"></Col>
       <Col>
-        <Card className="bg-light shadow">
+        <Card className="bg-white border-0 shadow">
           <Card.Header className="bg-white border-0">
             <Row>
               <Col md={12} className="d-flex justify-content-between">
@@ -67,7 +67,7 @@ const WorkProfile = ({
                     ))}
                   </div>
                   <hr />
-                  <h4>Rate: per hour (in Rs)</h4>
+                  <h4>Rate: per task (in Rs)</h4>
                   <div>
                     <h3 className="text-secondary font-weight-bold">{workProfile.rate}</h3>
                   </div>

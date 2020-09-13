@@ -30,7 +30,7 @@ const Profile = ({
         <Row className="py-0">
           <Col className="col-12"></Col>
           <Col>
-            <Card className="bg-white border-0">
+            <Card className="bg-white border-0 shadow">
               <Card.Header className="bg-white border-0">
                 <Row>
                   <Col md={6}>

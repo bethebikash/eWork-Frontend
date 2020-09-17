@@ -25,8 +25,8 @@ const Nav = ({ auth: { isAuthenticated, loading, user }, logout }) => {
                     <>
                       {user.role === 'work' && (
                         <>
-                          <NavLink className="nav-link m-auto" to="/me">
-                            My Task
+                          <NavLink className="nav-link m-auto" to="/work">
+                            My Work
                           </NavLink>
                         </>
                       )}
@@ -42,9 +42,7 @@ const Nav = ({ auth: { isAuthenticated, loading, user }, logout }) => {
                       </NavLink>
                     </>
                   ) : (
-                    <NavLink className="nav-link m-auto" to="/register">
-                      not auth
-                    </NavLink>
+                    <></>
                   )}
                 </>
               )}

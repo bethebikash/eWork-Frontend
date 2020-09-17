@@ -8,6 +8,7 @@ import toggle from './toggle'
 import jobs from './jobs'
 import job from './job'
 import myjobs from './myjobs'
+import myworks from './myworks'
 import bids from './bids'
 
-export default combineReducers({ alert, auth, workProfile, skills, technologies, toggle, jobs, job, myjobs, bids })
+export default combineReducers({ alert, auth, workProfile, skills, technologies, toggle, jobs, job, myjobs, bids, myworks })

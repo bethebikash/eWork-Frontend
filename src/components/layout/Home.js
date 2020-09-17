@@ -1,16 +1,36 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import { Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Spinner from '../utils/Spinner'
 import { getJobs } from '../../actions/jobs'
 import { Card, Grid, Button } from '@material-ui/core'
-import { Edit, Delete, CloudDownload } from '@material-ui/icons'
+import { setAlert } from '../../actions/alert'
+import axios from 'axios'
 // import { Link } from 'react-router-dom'
 
-const Home = ({ getJobs, jobs: { loading, jobs } }) => {
+const Home = ({ getJobs, jobs: { loading, jobs }, auth: { isAuthenticated, user }, setAlert }) => {
   useEffect(() => {
     getJobs()
   }, [])
+
+  const [redirect = false, setReditect] = useState()
+
+  const postBid = async (bidder, job) =>{
+    try {
+      const config = {
+        header: {
+          'Content-Type': 'application/json',
+        },
+      }
+      const newData = {bidder, job}
+      await axios.post('/bids', newData, config)
+      setReditect(true)
+      setAlert('You have successfully make a bid for this job', 'success')
+    } catch (error) {
+      setAlert(error.response.data.error.message, 'error')
+    }
+  }
 
   return loading && jobs === null ? (
     <Spinner />
@@ -34,23 +54,26 @@ const Home = ({ getJobs, jobs: { loading, jobs } }) => {
                     </p>
 
                     <Grid container>
-                      <Grid sm={6} xs={12}>
+                      <Grid sm={6} xs={12} item>
                         <p>
                           <span className="italic text-muted">Posted On: {job.createdAt}</span>
                         </p>
                       </Grid>
-                      <Grid className="d-flex justify-content-end" sm={6} xs={12}>
-                        <p>
-                          <Button
-                            variant="contained"
-                            size="small"
-                            color="primary"
-                            className="m-0 px-5"
-                          >
-                            Make a Bid
-                          </Button>
-                        </p>
-                      </Grid>
+                      {isAuthenticated && (
+                        <Grid className="d-flex justify-content-end" sm={6} xs={12} item>
+                          <p>
+                            <Button
+                              variant="contained"
+                              size="small"
+                              color="primary"
+                              className="m-0 px-5"
+                              onClick={()=>{postBid(user._id, job._id)}}
+                            >
+                              Make a Bid
+                            </Button>
+                          </p>
+                        </Grid>
+                      )}
                     </Grid>
                   </Grid>
                 </Grid>
@@ -82,12 +105,15 @@ const Home = ({ getJobs, jobs: { loading, jobs } }) => {
 }
 
 Home.propTypes = {
-  jobs: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
   getJobs: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
   jobs: state.jobs,
+  auth: state.auth,
 })
 
-export default connect(mapStateToProps, { getJobs })(Home)
+export default connect(mapStateToProps, { getJobs, setAlert })(Home)

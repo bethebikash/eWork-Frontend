@@ -39,6 +39,10 @@ export const GET_MYJOBS = 'GET_MYJOBS'
 export const CLEAR_MYJOBS = 'CLEAR_MYJOBS'
 export const MYJOBS_ERROR = 'MYJOBS_ERROR'
 
+export const GET_MYWORKS = 'GET_MYWORKS'
+export const CLEAR_MYWORKS = 'CLEAR_MYWORKS'
+export const MYWORKS_ERROR = 'MYWORKS_ERROR'
+
 export const GET_BIDS = 'GET_BIDS'
 export const BIDS_ERROR = 'BIDS_ERROR'
 

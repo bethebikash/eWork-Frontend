@@ -3,20 +3,46 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Spinner from './utils/Spinner'
 import { Row, Col} from 'react-bootstrap'
-import Axios from 'axios'
+import axios from 'axios'
 import { Card, Grid, Button } from '@material-ui/core'
+import { setAlert } from '../actions/alert'
+import { getMyJobs } from '../actions/myjobs'
+import { Redirect } from 'react-router-dom'
 
-const Bids = ({ jobId }) => {
+const Bids = ({ jobId, setAlert, getMyJobs, userId }) => {
   const [bids, setBids] = useState('')
 
   const fetchBid = async (id) => {
-    const res = await Axios.get(`/bids?job=${id}`)
+    const res = await axios.get(`/bids?job=${id}`)
     setBids(res.data)
   }
+
+  const [redirect = false, setReditect] = useState()
 
   useEffect(() => {
     fetchBid(jobId)
   }, [jobId])
+
+  const chooseBidder = async (bidder, job) =>{
+    try {
+      const config = {
+        header: {
+          'Content-Type': 'application/json',
+        },
+      }
+      const newData = {bidder, job}
+      await axios.post('/bids/choose', newData, config)
+      setAlert('You have successfully choose a bidder to do your job', 'success')
+      getMyJobs('posted_by', userId)
+      setReditect(true)
+    } catch (error) {
+      setAlert(error.response.data.error.message, 'error')
+    }
+  }
+
+  if (redirect) {
+    return <Redirect to="/job" />
+  }
 
   return bids === '' ? (
     <>
@@ -51,6 +77,7 @@ const Bids = ({ jobId }) => {
                       variant="contained"
                       color="secondary"
                       size="small"
+                      onClick={()=>{chooseBidder(bid.bidder._id, jobId)}}
                     >
                       Accept Bid
                     </Button>
@@ -67,10 +94,12 @@ const Bids = ({ jobId }) => {
 
 Bids.prototype = {
   jobId: PropTypes.string.isRequired,
+  setAlert: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  jobId: ownProps.jobId,
+  jobId: ownProps.job._id,
+  userId: ownProps.job.posted_by._id
 })
 
-export default connect(mapStateToProps)(Bids)
+export default connect(mapStateToProps, {setAlert, getMyJobs})(Bids)

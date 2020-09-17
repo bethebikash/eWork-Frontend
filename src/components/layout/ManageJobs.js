@@ -78,8 +78,12 @@ const ManageJobs = ({ setJob, getMyJobs, myjobs: { loading, myjobs }, user: { _i
                 )}
               </Grid>
             </Grid>
-            <hr />
-            <Bids jobId={myjob._id} />
+            {!myjob.taken_by && (
+              <>
+                <hr />
+                <Bids job={myjob} />
+              </>
+            )}
           </Card>
         </div>
       ))}

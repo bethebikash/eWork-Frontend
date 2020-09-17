@@ -82,7 +82,6 @@ const MyWork = ({ getMyWorks, myworks: { loading, myworks }, user: { _id } }) =>
                 )}
               </Grid>
             </Grid>
-            <hr />
           </Card>
         </div>
       ))}

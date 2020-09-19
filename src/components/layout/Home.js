@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import { Redirect } from 'react-router-dom'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Spinner from '../utils/Spinner'
@@ -14,8 +13,6 @@ const Home = ({ getJobs, jobs: { loading, jobs }, auth: { isAuthenticated, user 
     getJobs()
   }, [])
 
-  const [redirect = false, setReditect] = useState()
-
   const postBid = async (bidder, job) =>{
     try {
       const config = {
@@ -25,7 +22,6 @@ const Home = ({ getJobs, jobs: { loading, jobs }, auth: { isAuthenticated, user 
       }
       const newData = {bidder, job}
       await axios.post('/bids', newData, config)
-      setReditect(true)
       setAlert('You have successfully make a bid for this job', 'success')
     } catch (error) {
       setAlert(error.response.data.error.message, 'error')

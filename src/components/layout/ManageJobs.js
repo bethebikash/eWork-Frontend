@@ -66,14 +66,16 @@ const ManageJobs = ({ setJob, getMyJobs, myjobs: { loading, myjobs }, user: { _i
                 ) : (
                   <p>
                     Task is completed.{' '}
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      size="small"
-                      startIcon={<CloudDownload />}
-                    >
-                      Download File
-                    </Button>
+                    <a href={`http://localhost:5000/${myjob.file}`} download>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        size="small"
+                        startIcon={<CloudDownload />}
+                      >
+                        Download File
+                      </Button>{' '}
+                    </a>
                   </p>
                 )}
               </Grid>

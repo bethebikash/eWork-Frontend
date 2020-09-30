@@ -8,11 +8,34 @@ import Bids from '../Bids'
 import { Card, Grid, Button } from '@material-ui/core'
 import { Edit, Delete, CloudDownload } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
+import { setAlert } from '../../actions/alert'
+import axios from 'axios'
 
-const ManageJobs = ({ setJob, getMyJobs, myjobs: { loading, myjobs }, user: { _id } }) => {
+const ManageJobs = ({
+  setJob,
+  getMyJobs,
+  myjobs: { loading, myjobs },
+  user: { _id },
+  setAlert,
+}) => {
   useEffect(() => {
     getMyJobs('posted_by', _id)
   }, [])
+
+  const onDelete = async (jobId) => {
+    try {
+      const config = {
+        header: {
+          'Content-Type': 'application/json',
+        },
+      }
+      await axios.delete(`/jobs/${jobId}`, config)
+      setAlert('Job has been deleted successfully', 'success')
+      getMyJobs('posted_by', _id)
+    } catch (error) {
+      setAlert(error.response.data.error.message, 'error')
+    }
+  }
 
   return loading && myjobs === null ? (
     <Spinner />
@@ -38,7 +61,7 @@ const ManageJobs = ({ setJob, getMyJobs, myjobs: { loading, myjobs }, user: { _i
               <Link>
                 <Delete
                   onClick={(e) => {
-                    alert('delete function')
+                    onDelete(myjob._id)
                   }}
                   className="text-danger"
                 />
@@ -47,7 +70,7 @@ const ManageJobs = ({ setJob, getMyJobs, myjobs: { loading, myjobs }, user: { _i
             <Grid container>
               <Grid sm={6} xs={12} item>
                 <h2 className="text-color font-weight-bold">{myjob.title}</h2>
-                <p>{myjob.description}</p>
+                <p className="pr-2">{myjob.description}</p>
               </Grid>
               <Grid sm={6} xs={12} item>
                 <p>
@@ -98,6 +121,7 @@ ManageJobs.propTypes = {
   user: PropTypes.object.isRequired,
   getMyJobs: PropTypes.func.isRequired,
   setJob: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
@@ -105,4 +129,4 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
 })
 
-export default connect(mapStateToProps, { getMyJobs, setJob })(ManageJobs)
+export default connect(mapStateToProps, { getMyJobs, setJob, setAlert })(ManageJobs)

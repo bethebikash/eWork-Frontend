@@ -13,6 +13,8 @@ import Container from '@material-ui/core/Container'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 import { setAlert } from '../../actions/alert'
+import { v4 as uuidv4 } from 'uuid';
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -74,6 +76,37 @@ const AddJob = ({ user, setAlert }) => {
         price,
         posted_by,
       }
+
+      // const path = 'https://uat.esewa.com.np/epay/main'
+
+      // const uid = uuidv4();
+
+      // const params = {
+      //   amt: price,
+      //   psc: 0,
+      //   pdc: 0,
+      //   txAmt: 0,
+      //   tAmt: price,
+      //   pid: uid,
+      //   scd: 'epay_payment',
+      //   su: 'http://merchant.com.np/page/esewa_payment_success',
+      //   fu: 'http://merchant.com.np/page/esewa_payment_failed',
+      // }
+
+      //  try {
+      //   const config = {
+      //     header: {
+      //       'Content-Type': 'application/json',
+      //     },
+      //   }
+      //   await axios.post('https://uat.esewa.com.np/epay/main', params, config)
+      //   // setReditect(true)
+      //   setAlert('Job has been posted successfully', 'success')
+      // } catch (error) {
+      //   // setAlert(error.response.data.error.message, 'error')
+      //   alert(error)
+      // }
+
       try {
         const config = {
           header: {

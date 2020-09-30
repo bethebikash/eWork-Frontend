@@ -6,6 +6,7 @@ import { getJobs } from '../../actions/jobs'
 import { Card, Grid, Button } from '@material-ui/core'
 import { setAlert } from '../../actions/alert'
 import axios from 'axios'
+import headerImg from '~/../../public/header.jpg'
 // import { Link } from 'react-router-dom'
 
 const Home = ({ getJobs, jobs: { loading, jobs }, auth: { isAuthenticated, user }, setAlert }) => {
@@ -13,14 +14,14 @@ const Home = ({ getJobs, jobs: { loading, jobs }, auth: { isAuthenticated, user 
     getJobs()
   }, [])
 
-  const postBid = async (bidder, job) =>{
+  const postBid = async (bidder, job) => {
     try {
       const config = {
         header: {
           'Content-Type': 'application/json',
         },
       }
-      const newData = {bidder, job}
+      const newData = { bidder, job }
       await axios.post('/bids', newData, config)
       setAlert('You have successfully make a bid for this job', 'success')
     } catch (error) {
@@ -33,6 +34,11 @@ const Home = ({ getJobs, jobs: { loading, jobs }, auth: { isAuthenticated, user 
   ) : (
     <>
       <Grid container>
+        <header className="header">
+          <div id="overlay"></div>
+          <img className="img-fluid" src={headerImg} alt="header" />
+          <h1 className="header-text">Place to find you a job</h1>
+        </header>
         <Grid sm={9} xs={12}>
           {jobs.map((job) => (
             <div key={job._id}>
@@ -63,7 +69,9 @@ const Home = ({ getJobs, jobs: { loading, jobs }, auth: { isAuthenticated, user 
                               size="small"
                               color="primary"
                               className="m-0 px-5"
-                              onClick={()=>{postBid(user._id, job._id)}}
+                              onClick={() => {
+                                postBid(user._id, job._id)
+                              }}
                             >
                               Make a Bid
                             </Button>

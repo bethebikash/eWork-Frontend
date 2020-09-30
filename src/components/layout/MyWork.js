@@ -60,7 +60,7 @@ const MyWork = ({ getMyWorks, myworks: { loading, myworks }, user: { _id }, setA
             <Grid container>
               <Grid sm={6} xs={12} item>
                 <h2 className="text-color font-weight-bold">{mywork.title}</h2>
-                <p>{mywork.description}</p>
+                <p className="pr-2">{mywork.description}</p>
               </Grid>
               <Grid sm={6} xs={12} item>
                 <p>
